@@ -9,6 +9,11 @@ Ideally:
 mvnx org.apache.ant:ant
 ```
 
+Really:
+
+```
+mvn x:
+```
 
 ## Features
 
@@ -42,6 +47,7 @@ mvn -f .\mvn help:effective-pom
 * https://mizdebsk.fedorapeople.org/xmvn/
 * https://stackoverflow.com/questions/10536221/fetching-maven-artifacts-programmatically
 * http://aether.jcabi.com/
+* https://stackoverflow.com/questions/27818659/loading-mavens-settings-xml-for-jcabi-aether-to-use
 * https://maven.apache.org/ref/3.0.3/maven-core/apidocs/org/apache/maven/repository/RepositorySystem.html
 * https://maven.apache.org/ref/3.2.5/maven-artifact/apidocs/org/apache/maven/artifact/repository/ArtifactRepository.html
 * https://maven.apache.org/ref/3.2.5/maven-artifact/apidocs/org/apache/maven/artifact/repository/ArtifactRepository.html#getMirroredRepositories()
