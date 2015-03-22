@@ -12,7 +12,7 @@ mvnx org.apache.ant:ant
 Really:
 
 ```
-mvn x:
+mvn me.andrz:maven-executable:executable "-Dartifact=org.apache.ant:ant"
 ```
 
 ## Features

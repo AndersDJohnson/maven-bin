@@ -25,11 +25,15 @@ class MavenExecutable {
         run(args[0])
     }
 
+    public static Process run(String coords, String mainClassName = null) {
+        return run(null, coords, mainClassName)
+    }
+
     /**
      *
      * @param coords <groupId>:<artifactId>[:<extension>[:<classifier>]]:<version>
      */
-    public static Process run(String coords, String mainClassName = null) {
+    public static Process run(MavenProject project, String coords, String mainClassName = null) {
 
         if (! coords) {
             throw new RuntimeException("Must provide <artifact> argument.")
@@ -37,11 +41,14 @@ class MavenExecutable {
 
         coords = sanitizeCoords(coords)
 
-        MavenProject project = new MavenProject()
+        Aether aether
 
-        Aether aether = new Aether(project, getLocal())
-
-//        Aether aether = new Aether(getRemotes(), getLocal())
+        if (project) {
+            aether = new Aether(project, getLocal())
+        }
+        else {
+            aether = new Aether(getRemotes(), getLocal())
+        }
 
         Artifact targetArtifact = new DefaultArtifact(coords)
         Collection<Artifact> artifacts = aether.resolve(targetArtifact, JavaScopes.RUNTIME)
