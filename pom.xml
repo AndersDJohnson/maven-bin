@@ -6,9 +6,9 @@
     <groupId>me.andrz</groupId>
     <artifactId>maven-executable</artifactId>
     <version>1.0</version>
+    <packaging>maven-plugin</packaging>
     <properties>
-        <gmavenVersion>1.4</gmavenVersion>
-        <gmavenProviderSelection>2.0</gmavenProviderSelection>
+        <gmavenPlusVersion>1.5</gmavenPlusVersion>
         <groovyVersion>2.4.2</groovyVersion>
     </properties>
     <dependencies>
@@ -58,21 +58,20 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>org.codehaus.gmaven</groupId>
-                <artifactId>gmaven-plugin</artifactId>
-                <version>${gmavenVersion}</version>
-                <configuration>
-                    <providerSelection>${gmavenProviderSelection}</providerSelection>
-                    <sourceEncoding>UTF-8</sourceEncoding>
-                    <source/>
-                </configuration>
+                <groupId>org.codehaus.gmavenplus</groupId>
+                <artifactId>gmavenplus-plugin</artifactId>
+                <version>${gmavenPlusVersion}</version>
                 <executions>
                     <execution>
                         <goals>
+                            <goal>addSources</goal>
+                            <goal>addTestSources</goal>
                             <goal>generateStubs</goal>
                             <goal>compile</goal>
-                            <goal>generateTestStubs</goal>
+                            <goal>testGenerateStubs</goal>
                             <goal>testCompile</goal>
+                            <goal>removeStubs</goal>
+                            <goal>removeTestStubs</goal>
                         </goals>
                     </execution>
                 </executions>
