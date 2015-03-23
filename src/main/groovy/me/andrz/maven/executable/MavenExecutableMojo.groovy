@@ -9,12 +9,11 @@ import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
 
 /**
- * Echos an object string to the output screen.
- * @goal echo
- * @requiresProject false
+ *
  */
 @Mojo(
-        name = "executable"
+        name = "executable",
+        requiresProject = false
 )
 class MavenExecutableMojo extends AbstractMojo {
 
