@@ -14,6 +14,9 @@ Really:
 ```
 mvn me.andrz:maven-executable:executable "-Dartifact=org.apache.ant:ant"
 ```
+```
+mvn "-Dorg.slf4j.simpleLogger.defaultLogLevel=debug" -X clean install me.andrz:maven-executable:executable "-Dartifact=org.apache.ant:ant"
+```
 
 ## Features
 
@@ -48,6 +51,9 @@ mvn -f .\mvn help:effective-pom
 * https://stackoverflow.com/questions/10536221/fetching-maven-artifacts-programmatically
 * http://aether.jcabi.com/
 * https://stackoverflow.com/questions/27818659/loading-mavens-settings-xml-for-jcabi-aether-to-use
+* https://github.com/mguymon/naether
+* http://git.eclipse.org/c/aether/aether-demo.git/tree/aether-demo-snippets/src/main/java/org/eclipse/aether/examples
+* https://issues.jboss.org/browse/FORGE-2184 (A required class was missing while executing: org/eclipse/aether/spi/connector/transport/TransporterFactory)
 * https://maven.apache.org/ref/3.0.3/maven-core/apidocs/org/apache/maven/repository/RepositorySystem.html
 * https://maven.apache.org/ref/3.2.5/maven-artifact/apidocs/org/apache/maven/artifact/repository/ArtifactRepository.html
 * https://maven.apache.org/ref/3.2.5/maven-artifact/apidocs/org/apache/maven/artifact/repository/ArtifactRepository.html#getMirroredRepositories()

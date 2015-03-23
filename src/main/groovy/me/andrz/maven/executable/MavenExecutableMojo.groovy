@@ -1,8 +1,9 @@
-package me.andrz.maven.executable;
+package me.andrz.maven.executable
 
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException
+import org.apache.maven.plugin.logging.Log
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
@@ -29,9 +30,14 @@ class MavenExecutableMojo extends AbstractMojo {
     public void execute()
             throws MojoExecutionException, MojoFailureException
     {
-        getLog().info( 'TEST LOG' );
+        Log log = getLog()
 
-        MavenExecutable.run(project, artifact);
+        def out = new StringBuilder()
+        def err = new StringBuilder()
+        Process proc = MavenExecutable.run(project, artifact);
+        proc.waitForProcessOutput(out, err)
+        log.info out.toString()
+        log.info err.toString()
     }
 
 }

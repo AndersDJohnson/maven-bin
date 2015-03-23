@@ -1,12 +1,11 @@
 package me.andrz.maven.executable
 
-import com.jcabi.aether.Aether
 import groovy.util.logging.Slf4j
+import me.andrz.maven.executable.aether.Resolver
 import org.apache.maven.project.MavenProject
-import org.sonatype.aether.artifact.Artifact
-import org.sonatype.aether.repository.RemoteRepository
-import org.sonatype.aether.util.artifact.DefaultArtifact
-import org.sonatype.aether.util.artifact.JavaScopes
+import org.eclipse.aether.artifact.Artifact
+import org.eclipse.aether.artifact.DefaultArtifact
+import org.eclipse.aether.repository.RemoteRepository
 
 import java.util.jar.JarFile;
 
@@ -41,17 +40,17 @@ class MavenExecutable {
 
         coords = sanitizeCoords(coords)
 
-        Aether aether
-
-        if (project) {
-            aether = new Aether(project, getLocal())
-        }
-        else {
-            aether = new Aether(getRemotes(), getLocal())
-        }
+//        if (project) {
+//            aether = new Aether(project, getLocal())
+//        }
+//        else {
+//            aether = new Aether(getRemotes(), getLocal())
+//        }
+//
+//        Collection<Artifact> artifacts = aether.resolve(targetArtifact, JavaScopes.RUNTIME)
 
         Artifact targetArtifact = new DefaultArtifact(coords)
-        Collection<Artifact> artifacts = aether.resolve(targetArtifact, JavaScopes.RUNTIME)
+        List<Artifact> artifacts = Resolver.resolves(project, targetArtifact)
 
         List<File> classpaths = []
 
