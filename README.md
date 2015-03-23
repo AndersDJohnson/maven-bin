@@ -1,6 +1,6 @@
 # maven-executable
 
-CLI to run executable JARs from [Maven] from anywhere. Sort of like [npm] `install --global`.
+CLI to run executable JARs from [Maven] anywhere. Sort of like [npm] `install --global`.
 
 ## Usage
 
