@@ -20,7 +20,7 @@ import org.eclipse.aether.util.filter.DependencyFilterUtils
 class Resolver {
 
     public static List<Artifact> resolvesWithProject(MavenProject project, Artifact artifact, String scope = null) {
-        return resolves(project.getRemoteProjectRepositories(), artifact, scope)
+        return resolves(project?.getRemoteProjectRepositories(), artifact, scope)
     }
 
     public static List<Artifact> resolves(Artifact artifact, String scope = null) {

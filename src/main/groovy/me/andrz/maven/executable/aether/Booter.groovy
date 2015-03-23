@@ -1,5 +1,6 @@
 package me.andrz.maven.executable.aether
 
+import groovy.util.logging.Slf4j
 import org.apache.maven.repository.internal.MavenRepositorySystemUtils
 import org.eclipse.aether.DefaultRepositorySystemSession
 import org.eclipse.aether.RepositorySystem
@@ -9,6 +10,7 @@ import org.eclipse.aether.repository.RemoteRepository
 /**
  *
  */
+@Slf4j
 class Booter {
 
     public static RepositorySystem newRepositorySystem()
@@ -20,7 +22,13 @@ class Booter {
     {
         DefaultRepositorySystemSession session = MavenRepositorySystemUtils.newSession();
 
-        LocalRepository localRepo = new LocalRepository( "target/local-repo" );
+        def env = System.getenv()
+        String m2home = env.get('M2_HOME')
+        String localRepoPath = m2home + File.separator + 'repository'
+
+        log.debug("Local repository: \"${localRepoPath}\"")
+
+        LocalRepository localRepo = new LocalRepository( localRepoPath );
         session.setLocalRepositoryManager( system.newLocalRepositoryManager( session, localRepo ) );
 
         return session;
