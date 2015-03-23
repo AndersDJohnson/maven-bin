@@ -127,22 +127,4 @@ class MavenExecutable {
         return env.collect { k, v -> "$k=$v" }
     }
 
-    public static File getLocal() {
-        Map<String, String> env = System.getenv();
-        String m2home = env.get("M2_HOME");
-        log.debug "M2_HOME: ${m2home}"
-
-        return new File(m2home);
-    }
-
-    public static Collection<RemoteRepository> getRemotes() {
-        return Arrays.asList(
-                new RemoteRepository(
-                        "maven-central",
-                        "default",
-                        "http://repo1.maven.org/maven2/"
-                )
-        );
-    }
-
 }
