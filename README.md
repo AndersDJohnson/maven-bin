@@ -48,6 +48,7 @@ mvn -f .\mvn help:effective-pom
 
 
 * https://maven.apache.org/plugin-testing/
+* https://maven.apache.org/plugin-developers/plugin-testing.html
 * https://mizdebsk.fedorapeople.org/xmvn/
 * https://stackoverflow.com/questions/10536221/fetching-maven-artifacts-programmatically
 * http://aether.jcabi.com/
