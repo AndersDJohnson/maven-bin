@@ -50,6 +50,9 @@ mvn -f .\mvn help:effective-pom
 * https://maven.apache.org/plugin-testing/
 * https://maven.apache.org/plugin-developers/plugin-testing.html
 * https://mizdebsk.fedorapeople.org/xmvn/
+* https://stackoverflow.com/questions/11799923/programmatically-resolving-maven-dependencies-outside-of-a-plugin-get-reposito
+* https://wiki.eclipse.org/Aether/Creating_a_Repository_System_Session (settings.xml)
+* http://git.eclipse.org/c/aether/aether-ant.git/tree/src/main/java/org/eclipse/aether/internal/ant/AntRepoSys.java (settings.xml)
 * https://stackoverflow.com/questions/10536221/fetching-maven-artifacts-programmatically
 * http://aether.jcabi.com/
 * https://stackoverflow.com/questions/27818659/loading-mavens-settings-xml-for-jcabi-aether-to-use
