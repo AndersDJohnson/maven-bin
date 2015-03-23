@@ -24,7 +24,7 @@ class Booter {
 
         def env = System.getenv()
         String m2home = env.get('M2_HOME')
-        String localRepoPath = m2home + File.separator + 'repository'
+        String localRepoPath = m2home
 
         log.debug("Local repository: \"${localRepoPath}\"")
 
