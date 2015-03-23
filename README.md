@@ -1,5 +1,6 @@
 # maven-executable
 
+CLI to run executable JARs from [Maven] from anywhere. Sort of like [npm] `install --global`.
 
 ## Usage
 
@@ -9,19 +10,38 @@ Ideally:
 mvnx org.apache.ant:ant
 ```
 
-Really:
+Currently:
 
 ```
 mvn me.andrz:maven-executable:executable "-Dartifact=org.apache.ant:ant"
 ```
+
+## Install
+
+Ideally:
+
 ```
-mvn "-Dorg.slf4j.simpleLogger.defaultLogLevel=debug" -X clean install me.andrz:maven-executable:executable "-Dartifact=org.apache.ant:ant"
+mvn dependency:get "-Dartifact=me.andrz:maven-executable:RELEASE"
+```
+
+Currently:
+
+```
+git clone https://github.com/AndersDJohnson/maven-executable.git
+cd maven-executable
+mvn install
 ```
 
 ## Features
 
-* Auto-install
-* Search?
+* With a single command, install JARs and execute their main classes.
+* Pulls from `settings.xml` for 3rd-party repos like [Bintray].
+
+### Wishlist
+** Aliasing - default group ID and versions
+*** Add aliased command executables to global path
+** Auto-complete
+** Search repos
 
 
 ## Research
@@ -82,3 +102,7 @@ mvn -f .\mvn help:effective-pom
 * http://books.sonatype.com/mvnref-book/reference/writing-plugins-sect-custom-plugin.html
 * http://docs.codehaus.org/display/MAVENUSER/Mojo+Developer+Cookbook
 * http://blog.sonatype.com/2011/01/how-to-use-aether-in-maven-plugins/
+
+[bintray]: https://bintray.com/
+[maven]: https://maven.apache.org/
+[npm]: https://www.npmjs.com/
