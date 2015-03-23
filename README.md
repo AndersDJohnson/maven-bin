@@ -35,13 +35,13 @@ mvn install
 ## Features
 
 * With a single command, install JARs and execute their main classes.
-* Pulls from `settings.xml` for 3rd-party repos like [Bintray].
+* Uses `settings.xml` so you can configure 3rd-party repos, e.g. [Bintray].
 
 ### Wishlist
-** Aliasing - default group ID and versions
-*** Add aliased command executables to global path
-** Auto-complete
-** Search repos
+* Aliasing (default group ID and versions)
+** Add aliased command executables to global path
+* Auto-complete
+* Search repos
 
 
 ## Research
