@@ -1,6 +1,7 @@
 package me.andrz.maven.executable
 
 import groovy.util.logging.Slf4j
+import org.junit.Ignore
 import org.junit.Test
 
 /**
@@ -19,10 +20,19 @@ class MavenExecutableTest {
         runWithOutput('org.apache.ant:ant')
     }
 
-//    @Test
-//    public void testJCenter() {
-//        runWithOutput('com.github.jengelman.gradle.plugins:shadow:1.2.0')
-//    }
+    @Ignore("not working")
+    @Test
+    public void testBintray() {
+        runWithOutput('com.github.jengelman.gradle.plugins:shadow:1.2.0')
+//        runWithOutput('com.github.jengelman.gradle.plugins:shadow')
+    }
+
+    @Ignore("not working")
+    @Test
+    public void testCustomBintray() {
+        runWithOutput('me.andrz.jackson:jackson-json-reference:0.1.0')
+//        runWithOutput('me.andrz.jackson:jackson-json-reference')
+    }
 
 
     private static void runWithOutput(String coords) {
