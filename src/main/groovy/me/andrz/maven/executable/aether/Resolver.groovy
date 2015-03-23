@@ -7,7 +7,7 @@ import org.eclipse.aether.artifact.Artifact
 import org.eclipse.aether.collection.CollectRequest
 import org.eclipse.aether.graph.Dependency
 import org.eclipse.aether.graph.DependencyFilter
-import org.eclipse.aether.resolution.ArtifactRequest
+import org.eclipse.aether.repository.RemoteRepository
 import org.eclipse.aether.resolution.ArtifactResult
 import org.eclipse.aether.resolution.DependencyRequest
 import org.eclipse.aether.resolution.DependencyResult
@@ -19,29 +19,26 @@ import org.eclipse.aether.util.filter.DependencyFilterUtils
  */
 class Resolver {
 
-    public static Artifact resolve(MavenProject project, Artifact artifact) {
-
-        RepositorySystem system = Booter.newRepositorySystem();
-        RepositorySystemSession session = Booter.newRepositorySystemSession(system);
-
-        ArtifactRequest artifactRequest = new ArtifactRequest();
-        artifactRequest.setArtifact(artifact);
-        artifactRequest.setRepositories(project.getRemoteProjectRepositories());
-
-        ArtifactResult artifactResult = system.resolveArtifact(session, artifactRequest);
-
-        artifact = artifactResult.getArtifact();
-
-        return artifact;
+    public static List<Artifact> resolvesWithProject(MavenProject project, Artifact artifact, String scope = null) {
+        return resolves(project.getRemoteProjectRepositories(), artifact, scope)
     }
 
-    public static List<Artifact> resolves(MavenProject project, Artifact artifact) {
+    public static List<Artifact> resolves(Artifact artifact, String scope = null) {
+        return resolves(null, artifact, scope)
+    }
+
+    public static List<Artifact> resolves(List<RemoteRepository> repositories, Artifact artifact, String scope = '') {
+
+        if (! repositories) {
+            repositories = Booter.newRepositories()
+        }
+
         RepositorySystem system = Booter.newRepositorySystem();
         RepositorySystemSession session = Booter.newRepositorySystemSession(system);
 
         CollectRequest collectRequest = new CollectRequest();
-        collectRequest.setRoot(new Dependency(artifact, ""));
-        collectRequest.setRepositories(Booter.newRepositories(system, session));
+        collectRequest.setRoot(new Dependency(artifact, scope));
+        collectRequest.setRepositories(repositories);
 
 //        CollectResult collectResult = system.collectDependencies(session, collectRequest);
         DependencyFilter classpathFlter = DependencyFilterUtils.classpathFilter( JavaScopes.COMPILE );

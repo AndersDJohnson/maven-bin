@@ -3,7 +3,6 @@ package me.andrz.maven.executable.aether
 import org.apache.maven.repository.internal.MavenRepositorySystemUtils
 import org.eclipse.aether.DefaultRepositorySystemSession
 import org.eclipse.aether.RepositorySystem
-import org.eclipse.aether.RepositorySystemSession
 import org.eclipse.aether.repository.LocalRepository
 import org.eclipse.aether.repository.RemoteRepository
 
@@ -27,7 +26,7 @@ class Booter {
         return session;
     }
 
-    public static List<RemoteRepository> newRepositories( RepositorySystem system, RepositorySystemSession session )
+    public static List<RemoteRepository> newRepositories()
     {
         return new ArrayList<RemoteRepository>( Arrays.asList( newCentralRepository() ) );
     }

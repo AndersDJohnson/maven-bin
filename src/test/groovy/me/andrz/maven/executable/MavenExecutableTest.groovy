@@ -25,10 +25,10 @@ class MavenExecutableTest {
 //    }
 
 
-    private static void runWithOutput(String artifact) {
+    private static void runWithOutput(String coords) {
         def out = new StringBuilder()
         def err = new StringBuilder()
-        Process proc = MavenExecutable.run(artifact)
+        Process proc = MavenExecutable.run(coords)
         proc.waitForProcessOutput(out, err)
         log.info out.toString()
         log.info err.toString()

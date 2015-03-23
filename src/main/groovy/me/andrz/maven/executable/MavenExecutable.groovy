@@ -24,6 +24,14 @@ class MavenExecutable {
         run(args[0])
     }
 
+    public static getArtifactFromCoords(String coords) {
+        if (!coords) {
+            throw new RuntimeException("Must provide <artifact> argument.")
+        }
+        coords = sanitizeCoords(coords)
+        return new DefaultArtifact(coords)
+    }
+
     public static Process run(String coords, String mainClassName = null) {
         return run(null, coords, mainClassName)
     }
@@ -32,25 +40,28 @@ class MavenExecutable {
      *
      * @param coords <groupId>:<artifactId>[:<extension>[:<classifier>]]:<version>
      */
-    public static Process run(MavenProject project, String coords, String mainClassName = null) {
+    public static Process run(List<RemoteRepository> repositories, String coords, String mainClassName = null) {
+        Artifact targetArtifact = getArtifactFromCoords(coords)
+        List<Artifact> artifacts = Resolver.resolves(repositories, targetArtifact)
+        return withArtifacts(artifacts, targetArtifact, mainClassName)
+    }
 
-        if (! coords) {
-            throw new RuntimeException("Must provide <artifact> argument.")
-        }
 
-        coords = sanitizeCoords(coords)
+    /**
+     *
+     * @param coords <groupId>:<artifactId>[:<extension>[:<classifier>]]:<version>
+     */
+    public static Process runWithProject(MavenProject project, String coords, String mainClassName = null) {
+        Artifact targetArtifact = getArtifactFromCoords(coords)
+        List<Artifact> artifacts = Resolver.resolvesWithProject(project, targetArtifact)
+        return withArtifacts(artifacts, targetArtifact, mainClassName)
+    }
 
-//        if (project) {
-//            aether = new Aether(project, getLocal())
-//        }
-//        else {
-//            aether = new Aether(getRemotes(), getLocal())
-//        }
-//
-//        Collection<Artifact> artifacts = aether.resolve(targetArtifact, JavaScopes.RUNTIME)
-
-        Artifact targetArtifact = new DefaultArtifact(coords)
-        List<Artifact> artifacts = Resolver.resolves(project, targetArtifact)
+    /**
+     *
+     * @param coords <groupId>:<artifactId>[:<extension>[:<classifier>]]:<version>
+     */
+    public static Process withArtifacts(List<Artifact> artifacts, Artifact targetArtifact, String mainClassName = null) {
 
         List<File> classpaths = []
 
@@ -66,7 +77,7 @@ class MavenExecutable {
         log.debug "targetJarFile: $targetJarFile"
 
         if (! targetJarFile) {
-            throw new RuntimeException("Could not resolve JAR for \"$coords\"")
+            throw new RuntimeException("Could not resolve JAR for artifact: ${targetArtifact}")
         }
 
         if (! mainClassName) {
