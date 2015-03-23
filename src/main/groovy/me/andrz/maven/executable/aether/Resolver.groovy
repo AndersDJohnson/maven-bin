@@ -20,7 +20,9 @@ import org.eclipse.aether.util.filter.DependencyFilterUtils
 class Resolver {
 
     public static List<Artifact> resolvesWithProject(MavenProject project, Artifact artifact, String scope = null) {
-        return resolves(project?.getRemoteProjectRepositories(), artifact, scope)
+        // project seems always defined but not pulling settings repos
+//        return resolves(project?.getRemoteProjectRepositories(), artifact, scope)
+        return resolves(null, artifact, scope)
     }
 
     public static List<Artifact> resolves(Artifact artifact, String scope = null) {
@@ -29,7 +31,7 @@ class Resolver {
 
     public static List<Artifact> resolves(List<RemoteRepository> repositories, Artifact artifact, String scope = '') {
 
-        if (! repositories) {
+        if (!repositories) {
             repositories = Booter.newRepositories()
         }
 
@@ -41,11 +43,11 @@ class Resolver {
         collectRequest.setRepositories(repositories);
 
 //        CollectResult collectResult = system.collectDependencies(session, collectRequest);
-        DependencyFilter classpathFlter = DependencyFilterUtils.classpathFilter( JavaScopes.COMPILE );
-        DependencyRequest dependencyRequest = new DependencyRequest( collectRequest, classpathFlter );
+        DependencyFilter classpathFlter = DependencyFilterUtils.classpathFilter(JavaScopes.COMPILE);
+        DependencyRequest dependencyRequest = new DependencyRequest(collectRequest, classpathFlter);
 
 //        List<Dependency> dependencies = collectRequest.getDependencies();
-        DependencyResult dependencyResult = system.resolveDependencies( session, dependencyRequest )
+        DependencyResult dependencyResult = system.resolveDependencies(session, dependencyRequest)
 
         List<ArtifactResult> artifactResults = dependencyResult.getArtifactResults()
 

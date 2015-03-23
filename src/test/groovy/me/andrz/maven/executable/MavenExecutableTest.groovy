@@ -20,18 +20,16 @@ class MavenExecutableTest {
         runWithOutput('org.apache.ant:ant')
     }
 
-    @Ignore("not working")
+    @Ignore("requires repo settings")
     @Test
     public void testBintray() {
-        runWithOutput('com.github.jengelman.gradle.plugins:shadow:1.2.0')
-//        runWithOutput('com.github.jengelman.gradle.plugins:shadow')
+        runWithOutput('com.github.jengelman.gradle.plugins:shadow')
     }
 
-    @Ignore("not working")
+    @Ignore("requires repo settings")
     @Test
     public void testCustomBintray() {
-        runWithOutput('me.andrz.jackson:jackson-json-reference:0.1.0')
-//        runWithOutput('me.andrz.jackson:jackson-json-reference')
+        runWithOutput('me.andrz.jackson:jackson-json-reference')
     }
 
 

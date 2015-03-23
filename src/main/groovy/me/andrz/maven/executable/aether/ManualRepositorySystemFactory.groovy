@@ -13,17 +13,16 @@ import org.eclipse.aether.transport.http.HttpTransporterFactory
  *
  */
 class ManualRepositorySystemFactory {
-    public static RepositorySystem newRepositorySystem()
-    {
+    public static RepositorySystem newRepositorySystem() {
         /*
          * Aether's components implement org.eclipse.aether.spi.locator.Service to ease manual wiring and using the
          * prepopulated DefaultServiceLocator, we only need to register the repository connector and transporter
          * factories.
          */
         DefaultServiceLocator locator = MavenRepositorySystemUtils.newServiceLocator();
-        locator.addService( RepositoryConnectorFactory.class, BasicRepositoryConnectorFactory.class );
-        locator.addService( TransporterFactory.class, FileTransporterFactory.class );
-        locator.addService( TransporterFactory.class, HttpTransporterFactory.class );
+        locator.addService(RepositoryConnectorFactory.class, BasicRepositoryConnectorFactory.class);
+        locator.addService(TransporterFactory.class, FileTransporterFactory.class);
+        locator.addService(TransporterFactory.class, HttpTransporterFactory.class);
 
 //        locator.setErrorHandler();
 //        new DefaultServiceLocator.ErrorHandler() {
@@ -34,6 +33,6 @@ class ManualRepositorySystemFactory {
 //            }
 //        }
 
-        return locator.getService( RepositorySystem.class );
+        return locator.getService(RepositorySystem.class);
     }
 }
