@@ -39,7 +39,7 @@ mvn install
 
 ### Wishlist
 * Aliasing (default group ID and versions)
-** Add aliased command executables to global path
+ * Add aliased command executables to global path
 * Auto-complete
 * Search repos
 
