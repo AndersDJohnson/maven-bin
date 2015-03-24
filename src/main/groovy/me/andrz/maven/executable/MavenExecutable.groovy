@@ -15,16 +15,24 @@ import java.util.jar.JarFile;
 @Slf4j
 class MavenExecutable {
 
+    Resolver resolver
+
     public static final String defaultVersion = 'RELEASE'
 
     public static final File cwd = new File(System.getProperty("user.dir"))
 
-    public static void main(String[] args) {
+    public void main(String[] args) {
         log.debug args.toString()
         run(args[0])
     }
 
-    public static getArtifactFromCoords(String coords) {
+    public init() {
+        if (! resolver) {
+            resolver = new Resolver()
+        }
+    }
+
+    public getArtifactFromCoords(String coords) {
         if (!coords) {
             throw new RuntimeException("Must provide <artifact> argument.")
         }
@@ -32,7 +40,7 @@ class MavenExecutable {
         return new DefaultArtifact(coords)
     }
 
-    public static Process run(String coords, MavenExecutableParams params = null) {
+    public Process run(String coords, MavenExecutableParams params = null) {
         if (! params) params = new MavenExecutableParams()
         return run(null, coords, params)
     }
@@ -41,10 +49,11 @@ class MavenExecutable {
      *
      * @param coords <groupId>:<artifactId>[:<extension>[:<classifier>]]:<version>
      */
-    public static Process run(List<RemoteRepository> repositories, String coords, MavenExecutableParams params = null) {
+    public Process run(List<RemoteRepository> repositories, String coords, MavenExecutableParams params = null) {
+        init()
         if (! params) params = new MavenExecutableParams()
         Artifact targetArtifact = getArtifactFromCoords(coords)
-        List<Artifact> artifacts = Resolver.resolves(repositories, targetArtifact)
+        List<Artifact> artifacts = resolver.resolves(repositories, targetArtifact)
         params.artifacts = artifacts
         params.targetArtifact = targetArtifact
         return withArtifacts(params)
@@ -55,10 +64,11 @@ class MavenExecutable {
      *
      * @param coords <groupId>:<artifactId>[:<extension>[:<classifier>]]:<version>
      */
-    public static Process runWithProject(MavenProject project, String coords, MavenExecutableParams params = null) {
+    public Process runWithProject(MavenProject project, String coords, MavenExecutableParams params = null) {
+        init()
         if (! params) params = new MavenExecutableParams()
         Artifact targetArtifact = getArtifactFromCoords(coords)
-        List<Artifact> artifacts = Resolver.resolvesWithProject(project, targetArtifact)
+        List<Artifact> artifacts = resolver.resolvesWithProject(project, targetArtifact)
         params.artifacts = artifacts
         params.targetArtifact = targetArtifact
         return withArtifacts(params)
@@ -68,7 +78,8 @@ class MavenExecutable {
      *
      * @param coords <groupId>:<artifactId>[:<extension>[:<classifier>]]:<version>
      */
-    public static Process withArtifacts(MavenExecutableParams params) {
+    public Process withArtifacts(MavenExecutableParams params) {
+        init()
 
         List<Artifact> artifacts = params.artifacts
         Artifact targetArtifact = params.targetArtifact
@@ -122,24 +133,24 @@ class MavenExecutable {
      * @param coords
      * @return
      */
-    public static String sanitizeCoords(String coords) {
+    public String sanitizeCoords(String coords) {
         if (coords.split(':').length < 3) {
             coords += ':' + defaultVersion
         }
         return coords
     }
 
-    public static boolean artifactsMatch(Artifact a, Artifact b) {
+    public boolean artifactsMatch(Artifact a, Artifact b) {
         return a.artifactId == b.artifactId && a.groupId == b.groupId
     }
 
-    public static String getMainClassName(File jarFile) {
+    public String getMainClassName(File jarFile) {
         JarFile jf = new JarFile(jarFile);
         String mainClassName = jf?.manifest?.mainAttributes?.getValue("Main-Class")
         return mainClassName
     }
 
-    public static String[] toEnvStrings(def env) {
+    public String[] toEnvStrings(def env) {
         return env.collect { k, v -> "$k=$v" }
     }
 

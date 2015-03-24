@@ -1,7 +1,9 @@
 package me.andrz.maven.executable
 
 import groovy.util.logging.Slf4j
-import org.junit.Ignore
+import me.andrz.maven.executable.aether.Booter
+import me.andrz.maven.executable.aether.Resolver
+import org.junit.Before
 import org.junit.Test
 
 /**
@@ -9,6 +11,21 @@ import org.junit.Test
  */
 @Slf4j
 class MavenExecutableTest {
+
+    MavenExecutable mavenExecutable
+
+
+    @Before
+    public void before() {
+        mavenExecutable = new MavenExecutable(
+                resolver: new Resolver(
+                        booter: new Booter(
+                                settingsPath: MavenExecutable.class.getResource('a/settings.xml').path
+                        )
+                )
+        )
+    }
+
 
     @Test
     public void test() {
@@ -20,13 +37,11 @@ class MavenExecutableTest {
         runWithOutput('org.apache.ant:ant')
     }
 
-    @Ignore("requires repo settings")
     @Test
     public void testBintray() {
         runWithOutput('com.github.jengelman.gradle.plugins:shadow')
     }
 
-    @Ignore("requires repo settings")
     @Test
     public void testCustomBintray() {
         runWithOutput('me.andrz.jackson:jackson-json-reference')
@@ -47,10 +62,10 @@ class MavenExecutableTest {
     }
 
 
-    private static void runWithOutput(String coords, MavenExecutableParams params = null) {
+    private void runWithOutput(String coords, MavenExecutableParams params = null) {
         def out = new StringBuilder()
         def err = new StringBuilder()
-        Process proc = MavenExecutable.run(coords, params)
+        Process proc = mavenExecutable.run(coords, params)
         proc.waitForProcessOutput(out, err)
         log.info out.toString()
         log.info err.toString()

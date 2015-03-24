@@ -20,11 +20,14 @@ import org.eclipse.aether.repository.RemoteRepository
 @Slf4j
 class Booter {
 
-    public static RepositorySystem newRepositorySystem() {
+    String settingsPath
+    String localRepoPath
+
+    public RepositorySystem newRepositorySystem() {
         return ManualRepositorySystemFactory.newRepositorySystem();
     }
 
-    public static DefaultRepositorySystemSession newRepositorySystemSession(RepositorySystem system) {
+    public DefaultRepositorySystemSession newRepositorySystemSession(RepositorySystem system) {
         DefaultRepositorySystemSession session = MavenRepositorySystemUtils.newSession();
 
         String localRepoPath = getLocalRepoPath()
@@ -35,29 +38,33 @@ class Booter {
         return session;
     }
 
-    public static String getMavenHome() {
+    public String getMavenHome() {
         def env = System.getenv()
         String mavenHome = env.get('M2_HOME')
         return mavenHome;
     }
 
-    public static String getUserMavenHome() {
+    public String getUserMavenHome() {
         return System.getProperty('user.home') + File.separator + '.m2'
     }
 
-    public static File getLocalRepoPath() {
-        String localRepoPath = getUserMavenHome() + File.separator + 'repository'
+    public File getLocalRepoPath() {
+        if (! localRepoPath) {
+            localRepoPath = getUserMavenHome() + File.separator + 'repository'
+        }
         log.debug("Local repository: \"${localRepoPath}\"")
         return new File(localRepoPath)
     }
 
-    public static File getSettingsFile() {
-        String settingsPath = getUserMavenHome() + File.separator + 'settings.xml'
+    public File getSettingsFile() {
+        if (! settingsPath) {
+            settingsPath = getUserMavenHome() + File.separator + 'settings.xml'
+        }
         log.debug("Settings path: \"${settingsPath}\"")
         return new File(settingsPath)
     }
 
-    public static Settings getSettings() {
+    public Settings getSettings() {
         SettingsBuilder settingsBuilder = new DefaultSettingsBuilderFactory().newInstance();
         DefaultSettingsBuildingRequest request = new DefaultSettingsBuildingRequest();
         request.setGlobalSettingsFile(getSettingsFile())
@@ -66,7 +73,7 @@ class Booter {
         return settings;
     }
 
-    public static List<RemoteRepository> newRepositories() {
+    public List<RemoteRepository> newRepositories() {
         Settings settings = getSettings();
 
         List<RemoteRepository> remoteRepositories = new ArrayList<>()
@@ -90,7 +97,7 @@ class Booter {
         return remoteRepositories
     }
 
-    public static RemoteRepository toRemoteRepository(Repository repository) {
+    public RemoteRepository toRemoteRepository(Repository repository) {
         RemoteRepository.Builder remoteRepositoryBuilder = new RemoteRepository.Builder(
                 repository.getId(),
                 "default",
@@ -100,7 +107,8 @@ class Booter {
         return remoteRepositoryBuilder.build()
     }
 
-    private static RemoteRepository newCentralRepository() {
+    public RemoteRepository newCentralRepository() {
         return new RemoteRepository.Builder("central", "default", "http://central.maven.org/maven2/").build()
     }
+
 }

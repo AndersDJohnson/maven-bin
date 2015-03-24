@@ -19,34 +19,36 @@ import org.eclipse.aether.util.filter.DependencyFilterUtils
  */
 class Resolver {
 
-    public static List<Artifact> resolvesWithProject(MavenProject project, Artifact artifact, String scope = null) {
-        // project seems always defined but not pulling settings repos
-//        return resolves(project?.getRemoteProjectRepositories(), artifact, scope)
+    Booter booter
+
+    public List<Artifact> resolvesWithProject(MavenProject project, Artifact artifact, String scope = null) {
         return resolves(null, artifact, scope)
     }
 
-    public static List<Artifact> resolves(Artifact artifact, String scope = null) {
+    public List<Artifact> resolves(Artifact artifact, String scope = null) {
         return resolves(null, artifact, scope)
     }
 
-    public static List<Artifact> resolves(List<RemoteRepository> repositories, Artifact artifact, String scope = '') {
+    public List<Artifact> resolves(List<RemoteRepository> repositories, Artifact artifact, String scope = '') {
 
-        if (!repositories) {
-            repositories = Booter.newRepositories()
+        if (! booter) {
+            booter = new Booter()
         }
 
-        RepositorySystem system = Booter.newRepositorySystem();
-        RepositorySystemSession session = Booter.newRepositorySystemSession(system);
+        if (! repositories) {
+            repositories = booter.newRepositories()
+        }
+
+        RepositorySystem system = booter.newRepositorySystem();
+        RepositorySystemSession session = booter.newRepositorySystemSession(system);
 
         CollectRequest collectRequest = new CollectRequest();
         collectRequest.setRoot(new Dependency(artifact, scope));
         collectRequest.setRepositories(repositories);
 
-//        CollectResult collectResult = system.collectDependencies(session, collectRequest);
-        DependencyFilter classpathFlter = DependencyFilterUtils.classpathFilter(JavaScopes.COMPILE);
-        DependencyRequest dependencyRequest = new DependencyRequest(collectRequest, classpathFlter);
+        DependencyFilter classpathFilter = DependencyFilterUtils.classpathFilter(JavaScopes.COMPILE);
+        DependencyRequest dependencyRequest = new DependencyRequest(collectRequest, classpathFilter);
 
-//        List<Dependency> dependencies = collectRequest.getDependencies();
         DependencyResult dependencyResult = system.resolveDependencies(session, dependencyRequest)
 
         List<ArtifactResult> artifactResults = dependencyResult.getArtifactResults()

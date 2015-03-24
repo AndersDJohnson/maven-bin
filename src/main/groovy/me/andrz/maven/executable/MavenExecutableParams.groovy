@@ -10,4 +10,6 @@ class MavenExecutableParams {
     Artifact targetArtifact
     String mainClassName
     String arguments
+    String settingsPath
+    String localRepoPath
 }
