@@ -9,11 +9,17 @@ Ideally:
 ```
 mvnx org.apache.ant:ant
 ```
+```
+mvnx org.apache.ant:ant -h
+```
 
 Currently:
 
 ```
 mvn me.andrz:maven-executable:executable "-Dartifact=org.apache.ant:ant"
+```
+```
+mvn me.andrz:maven-executable:executable "-Dartifact=org.apache.ant:ant" "-Darguments=-h"
 ```
 
 ## Install
