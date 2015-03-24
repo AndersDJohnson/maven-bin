@@ -82,6 +82,7 @@ mvn -f .\mvn help:effective-pom
 ```
 
 
+* https://github.com/TimMoore/mojo-executor
 * https://maven.apache.org/plugin-testing/
 * https://maven.apache.org/plugin-developers/plugin-testing.html
 * https://mizdebsk.fedorapeople.org/xmvn/
