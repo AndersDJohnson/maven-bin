@@ -50,6 +50,15 @@ mvn install
 * Search repos
 
 
+## Dev
+
+Set default log level for slf4j simple:
+
+```
+-Dorg.slf4j.simpleLogger.defaultLogLevel=debug
+```
+
+
 ## Research
 
 ```
