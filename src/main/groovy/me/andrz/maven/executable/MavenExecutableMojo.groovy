@@ -26,6 +26,9 @@ class MavenExecutableMojo extends AbstractMojo {
     @Parameter( property  = "artifact" )
     private String artifact;
 
+    @Parameter( property  = "arguments" )
+    private String arguments;
+
     public void execute()
             throws MojoExecutionException, MojoFailureException
     {
@@ -36,11 +39,15 @@ class MavenExecutableMojo extends AbstractMojo {
         Process proc
         if (project) {
             log.info("Running with project...")
-            proc = MavenExecutable.runWithProject(project, artifact)
+            proc = MavenExecutable.runWithProject(project, artifact, new MavenExecutableParams(
+                    arguments: arguments
+            ))
         }
         else {
             log.info("Running with local repo...")
-            proc = MavenExecutable.run(artifact)
+            proc = MavenExecutable.run(artifact, new MavenExecutableParams(
+                    arguments: arguments
+            ))
         }
 
         proc.waitForProcessOutput(out, err)

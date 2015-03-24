@@ -32,18 +32,22 @@ class MavenExecutable {
         return new DefaultArtifact(coords)
     }
 
-    public static Process run(String coords, String mainClassName = null) {
-        return run(null, coords, mainClassName)
+    public static Process run(String coords, MavenExecutableParams params = null) {
+        if (! params) params = new MavenExecutableParams()
+        return run(null, coords, params)
     }
 
     /**
      *
      * @param coords <groupId>:<artifactId>[:<extension>[:<classifier>]]:<version>
      */
-    public static Process run(List<RemoteRepository> repositories, String coords, String mainClassName = null) {
+    public static Process run(List<RemoteRepository> repositories, String coords, MavenExecutableParams params = null) {
+        if (! params) params = new MavenExecutableParams()
         Artifact targetArtifact = getArtifactFromCoords(coords)
         List<Artifact> artifacts = Resolver.resolves(repositories, targetArtifact)
-        return withArtifacts(artifacts, targetArtifact, mainClassName)
+        params.artifacts = artifacts
+        params.targetArtifact = targetArtifact
+        return withArtifacts(params)
     }
 
 
@@ -51,17 +55,25 @@ class MavenExecutable {
      *
      * @param coords <groupId>:<artifactId>[:<extension>[:<classifier>]]:<version>
      */
-    public static Process runWithProject(MavenProject project, String coords, String mainClassName = null) {
+    public static Process runWithProject(MavenProject project, String coords, MavenExecutableParams params = null) {
+        if (! params) params = new MavenExecutableParams()
         Artifact targetArtifact = getArtifactFromCoords(coords)
         List<Artifact> artifacts = Resolver.resolvesWithProject(project, targetArtifact)
-        return withArtifacts(artifacts, targetArtifact, mainClassName)
+        params.artifacts = artifacts
+        params.targetArtifact = targetArtifact
+        return withArtifacts(params)
     }
 
     /**
      *
      * @param coords <groupId>:<artifactId>[:<extension>[:<classifier>]]:<version>
      */
-    public static Process withArtifacts(List<Artifact> artifacts, Artifact targetArtifact, String mainClassName = null) {
+    public static Process withArtifacts(MavenExecutableParams params) {
+
+        List<Artifact> artifacts = params.artifacts
+        Artifact targetArtifact = params.targetArtifact
+        String mainClassName = params.mainClassName
+        String arguments = params.arguments
 
         List<File> classpaths = []
 
@@ -91,6 +103,10 @@ class MavenExecutable {
         def env = System.getenv()
         def envStr = toEnvStrings(env)
         def command = "java -cp \"${classpath}\" ${mainClassName}"
+
+        if (arguments) {
+            command += " ${arguments}"
+        }
 
         log.debug "command: ${command}"
         log.debug "envStr: ${envStr}"

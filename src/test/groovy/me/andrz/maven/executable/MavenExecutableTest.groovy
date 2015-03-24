@@ -32,11 +32,25 @@ class MavenExecutableTest {
         runWithOutput('me.andrz.jackson:jackson-json-reference')
     }
 
+    @Test
+    public void testArgs() {
+        runWithOutput('org.apache.ant:ant', new MavenExecutableParams(
+                arguments: '-h'
+        ))
+    }
 
-    private static void runWithOutput(String coords) {
+    @Test
+    public void testArgsJetty() {
+        runWithOutput('org.eclipse.jetty:jetty-start', new MavenExecutableParams(
+                arguments: '--help'
+        ))
+    }
+
+
+    private static void runWithOutput(String coords, MavenExecutableParams params = null) {
         def out = new StringBuilder()
         def err = new StringBuilder()
-        Process proc = MavenExecutable.run(coords)
+        Process proc = MavenExecutable.run(coords, params)
         proc.waitForProcessOutput(out, err)
         log.info out.toString()
         log.info err.toString()
