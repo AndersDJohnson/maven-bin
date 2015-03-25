@@ -1,8 +1,10 @@
 # maven-executable
 
-CLI to run executable JARs from [Maven] anywhere. Sort of like [npm] `install --global`.
+CLI to install & run executable artifacts (e.g. JARs) from [Maven] repositories, with automagic classpathing of dependencies, and aliases on your global path. Sort of like [npm] `install --global`.
 
 ## Usage
+
+### Executing 
 
 Ideally:
 
