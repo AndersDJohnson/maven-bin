@@ -12,7 +12,7 @@ import org.apache.maven.project.MavenProject;
  *
  */
 @Mojo(
-        name = "executable",
+        name = "exec",
         requiresProject = false
 )
 class MavenExecutableMojo extends AbstractMojo {

@@ -3,8 +3,8 @@
          xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>me.andrz</groupId>
-    <artifactId>maven-executable</artifactId>
+    <groupId>me.andrz.maven</groupId>
+    <artifactId>executable</artifactId>
     <version>1.0</version>
     <packaging>maven-plugin</packaging>
     <properties>
