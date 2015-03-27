@@ -48,7 +48,12 @@ class Resolver {
         collectRequest.setRoot(new Dependency(artifact, scope));
         collectRequest.setRepositories(repositories);
 
-        DependencyFilter classpathFilter = DependencyFilterUtils.classpathFilter(JavaScopes.COMPILE);
+        DependencyFilter classpathFilter = DependencyFilterUtils.classpathFilter(
+                JavaScopes.COMPILE,
+                JavaScopes.PROVIDED,
+                JavaScopes.SYSTEM,
+                JavaScopes.RUNTIME,
+        );
         DependencyRequest dependencyRequest = new DependencyRequest(collectRequest, classpathFilter);
 
         DependencyResult dependencyResult = system.resolveDependencies(session, dependencyRequest)
