@@ -18,10 +18,10 @@ mvnx org.apache.ant:ant -h
 Currently:
 
 ```
-mvn me.andrz:maven-executable:executable "-Dartifact=org.apache.ant:ant"
+mvn me.andrz.maven"executable:exec "-Dartifact=org.apache.ant:ant"
 ```
 ```
-mvn me.andrz:maven-executable:executable "-Dartifact=org.apache.ant:ant" "-Darguments=-h"
+mvn me.andrz.maven"executable:exec "-Dartifact=org.apache.ant:ant" "-Darguments=-h"
 ```
 
 ## Install
@@ -29,7 +29,7 @@ mvn me.andrz:maven-executable:executable "-Dartifact=org.apache.ant:ant" "-Dargu
 Ideally:
 
 ```
-mvn dependency:get "-Dartifact=me.andrz:maven-executable:RELEASE"
+mvn dependency:get "-Dartifact=me.andrz.maven:executable:RELEASE"
 ```
 
 Currently:
