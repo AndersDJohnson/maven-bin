@@ -18,10 +18,10 @@ mvnx org.apache.ant:ant -h
 Currently:
 
 ```
-mvn me.andrz.maven"executable:exec "-Dartifact=org.apache.ant:ant"
+mvn me.andrz.maven:executable:exec "-Dartifact=org.apache.ant:ant"
 ```
 ```
-mvn me.andrz.maven"executable:exec "-Dartifact=org.apache.ant:ant" "-Darguments=-h"
+mvn me.andrz.maven:executable:exec "-Dartifact=org.apache.ant:ant" "-Darguments=-h"
 ```
 
 ## Install
