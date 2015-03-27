@@ -3,6 +3,7 @@ package me.andrz.maven.executable.aether
 import groovy.util.logging.Slf4j
 import org.apache.maven.repository.internal.MavenRepositorySystemUtils
 import org.apache.maven.settings.Profile
+import org.apache.maven.settings.Proxy
 import org.apache.maven.settings.Repository
 import org.apache.maven.settings.Settings
 import org.apache.maven.settings.building.DefaultSettingsBuilderFactory
@@ -11,8 +12,12 @@ import org.apache.maven.settings.building.SettingsBuilder
 import org.apache.maven.settings.building.SettingsBuildingResult
 import org.eclipse.aether.DefaultRepositorySystemSession
 import org.eclipse.aether.RepositorySystem
+import org.eclipse.aether.RepositorySystemSession
 import org.eclipse.aether.repository.LocalRepository
 import org.eclipse.aether.repository.RemoteRepository
+import org.eclipse.aether.util.repository.AuthenticationBuilder
+import org.eclipse.aether.util.repository.DefaultProxySelector
+import org.eclipse.aether.repository.ProxySelector
 
 /**
  *
@@ -34,6 +39,8 @@ class Booter {
 
         LocalRepository localRepo = new LocalRepository(localRepoPath);
         session.setLocalRepositoryManager(system.newLocalRepositoryManager(session, localRepo));
+
+        session.setProxySelector(getProxySelector())
 
         return session;
     }
@@ -73,7 +80,7 @@ class Booter {
         return settings;
     }
 
-    public List<RemoteRepository> newRepositories() {
+    public List<RemoteRepository> newRepositories(RepositorySystem system, RepositorySystemSession session) {
         Settings settings = getSettings();
 
         List<RemoteRepository> remoteRepositories = new ArrayList<>()
@@ -85,7 +92,7 @@ class Booter {
                 if (profile.id && activeProfiles.contains(profile.id)) {
                     if (profile.repositories) {
                         for (Repository repository : profile.repositories) {
-                            remoteRepositories.add(toRemoteRepository(repository))
+                            remoteRepositories.add(toRemoteRepository(repository, system, session))
                         }
                     }
                 }
@@ -97,18 +104,61 @@ class Booter {
         return remoteRepositories
     }
 
-    public RemoteRepository toRemoteRepository(Repository repository) {
+    public RemoteRepository toRemoteRepository(Repository repository, RepositorySystem system, RepositorySystemSession session) {
+
+        // need a temp repo to lookup proxy
+        RemoteRepository tempRemoteRepository = toRemoteRepositoryBuilder(repository).build()
+
+        ProxySelector proxySelector = session.proxySelector
+        org.eclipse.aether.repository.Proxy proxy = proxySelector.getProxy(tempRemoteRepository)
+
+        // now build the actual repo and attach proxy
+        RemoteRepository.Builder remoteRepositoryBuilder = toRemoteRepositoryBuilder(repository)
+        remoteRepositoryBuilder.proxy = proxy
+        RemoteRepository remoteRepository = remoteRepositoryBuilder.build()
+
+        return remoteRepository
+    }
+
+    public RemoteRepository.Builder toRemoteRepositoryBuilder(Repository repository) {
         RemoteRepository.Builder remoteRepositoryBuilder = new RemoteRepository.Builder(
                 repository.getId(),
                 "default",
                 repository.getUrl()
         )
 //        remoteRepositoryBuilder.setReleasePolicy(repository.getReleases() as RepositoryPolicy)
-        return remoteRepositoryBuilder.build()
     }
 
     public RemoteRepository newCentralRepository() {
         return new RemoteRepository.Builder("central", "default", "http://central.maven.org/maven2/").build()
+    }
+
+    public ProxySelector getProxySelector()
+    {
+        DefaultProxySelector selector = new DefaultProxySelector();
+
+        Settings settings = getSettings()
+
+        if (settings.proxies) {
+            for (Proxy proxy : settings.proxies) {
+                String nonProxyHosts = proxy.nonProxyHosts
+                selector.add( convertProxy(proxy), nonProxyHosts )
+            }
+        }
+
+        return selector
+    }
+
+    public org.eclipse.aether.repository.Proxy convertProxy(Proxy settingsProxy) {
+        AuthenticationBuilder auth = new AuthenticationBuilder()
+        auth
+            .addUsername( settingsProxy.getUsername() )
+            .addPassword( settingsProxy.getPassword() )
+        org.eclipse.aether.repository.Proxy proxy = new org.eclipse.aether.repository.Proxy(
+            settingsProxy.getProtocol(), settingsProxy.getHost(),
+            settingsProxy.getPort(), auth.build()
+        )
+        return proxy
     }
 
 }
