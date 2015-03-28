@@ -1,6 +1,5 @@
 package me.andrz.maven.executable.aether
 
-import org.apache.maven.model.Repository
 import org.apache.maven.project.MavenProject
 import org.eclipse.aether.RepositorySystem
 import org.eclipse.aether.RepositorySystemSession
@@ -8,7 +7,6 @@ import org.eclipse.aether.artifact.Artifact
 import org.eclipse.aether.collection.CollectRequest
 import org.eclipse.aether.graph.Dependency
 import org.eclipse.aether.graph.DependencyFilter
-import org.eclipse.aether.repository.ProxySelector
 import org.eclipse.aether.repository.RemoteRepository
 import org.eclipse.aether.resolution.ArtifactResult
 import org.eclipse.aether.resolution.DependencyRequest
