@@ -29,6 +29,10 @@ class MavenExecutableExecMojo extends AbstractMojo {
     @Parameter( property  = "arguments" )
     private String arguments;
 
+    @Parameter( property  = "alias", required = false )
+    private String alias;
+
+
     public void execute()
             throws MojoExecutionException, MojoFailureException
     {
@@ -40,7 +44,8 @@ class MavenExecutableExecMojo extends AbstractMojo {
         def err = new StringBuilder()
         Process proc
         proc = mavenExecutable.run(artifact, new MavenExecutableParams(
-                arguments: arguments
+                arguments: arguments,
+                alias: alias
         ))
 
         proc.waitForProcessOutput(out, err)
