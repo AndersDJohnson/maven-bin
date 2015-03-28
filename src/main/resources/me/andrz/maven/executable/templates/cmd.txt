@@ -1,0 +1,6 @@
+@echo off
+
+REM splat args immediately after, so we can support maven-plugin types which need immediate :GOAL appended
+${command}%*
+
+@echo on

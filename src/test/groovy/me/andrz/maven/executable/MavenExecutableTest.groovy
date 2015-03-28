@@ -4,6 +4,7 @@ import groovy.util.logging.Slf4j
 import me.andrz.maven.executable.aether.Booter
 import me.andrz.maven.executable.aether.Resolver
 import org.junit.Before
+import org.junit.Ignore
 import org.junit.Test
 
 /**
@@ -26,6 +27,15 @@ class MavenExecutableTest {
         )
     }
 
+
+    @Ignore("meta install won't pass first test")
+    @Test
+    public void testMetaInstall() {
+        runWithOutput('me.andrz.maven:executable', new MavenExecutableParams(
+                alias: 'mvnx',
+                type: 'maven-plugin'
+        ))
+    }
 
     @Test
     public void test() {

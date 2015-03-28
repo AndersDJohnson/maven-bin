@@ -15,7 +15,7 @@ import org.apache.maven.project.MavenProject;
         name = "exec",
         requiresProject = false
 )
-class MavenExecutableMojo extends AbstractMojo {
+class MavenExecutableExecMojo extends AbstractMojo {
 
     /**
      * The enclosing project.

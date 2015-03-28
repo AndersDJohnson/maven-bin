@@ -81,6 +81,33 @@ class MavenExecutable {
     public Process withArtifacts(MavenExecutableParams params) {
         init()
 
+        String command = buildCommandString(params)
+
+        // Install
+        MavenExecutableParams installParams = params.clone()
+        installParams.arguments = null
+        MavenExecutableInstall.install(installParams)
+
+        log.debug "command: ${command}"
+
+        def env = System.getenv()
+        def envStr = toEnvStrings(env)
+
+        def proc = command.execute(envStr, cwd)
+
+        return proc
+    }
+
+    /**
+     * Build command string for executing JAR specified by params.
+     * Currently supports Windows 7 via Powershell.
+     * TODO: Handle other OSs including Linux, Mac, etc.
+     *
+     * @param params
+     * @return
+     */
+    public static String buildCommandString(MavenExecutableParams params) {
+
         List<Artifact> artifacts = params.artifacts
         Artifact targetArtifact = params.targetArtifact
         String mainClassName = params.mainClassName
@@ -111,20 +138,13 @@ class MavenExecutable {
 
         def classpath = classpaths.join(';')
 
-        def env = System.getenv()
-        def envStr = toEnvStrings(env)
-        def command = "java -cp \"${classpath}\" ${mainClassName}"
+        def command = "java -classpath \"${classpath}\" \"${mainClassName}\""
 
         if (arguments) {
             command += " ${arguments}"
         }
 
-        log.debug "command: ${command}"
-        log.debug "envStr: ${envStr}"
-
-        def proc = command.execute(envStr, cwd)
-
-        return proc
+        return command
     }
 
     /**
@@ -133,24 +153,35 @@ class MavenExecutable {
      * @param coords
      * @return
      */
-    public String sanitizeCoords(String coords) {
+    public static String sanitizeCoords(String coords) {
         if (coords.split(':').length < 3) {
             coords += ':' + defaultVersion
         }
         return coords
     }
 
-    public boolean artifactsMatch(Artifact a, Artifact b) {
+    /**
+     * TODO: Support other fields (e.g. extension, classifier)?
+     * See {@link org.eclipse.aether.artifact.DefaultArtifact#DefaultArtifact(java.lang.String, java.util.Map)}.
+     *
+     * @param artifact
+     * @return
+     */
+    public static String makeCoords(Artifact artifact) {
+        return artifact.groupId + ':' + artifact.artifactId + ':' + artifact.version
+    }
+
+    public static boolean artifactsMatch(Artifact a, Artifact b) {
         return a.artifactId == b.artifactId && a.groupId == b.groupId
     }
 
-    public String getMainClassName(File jarFile) {
+    public static String getMainClassName(File jarFile) {
         JarFile jf = new JarFile(jarFile);
         String mainClassName = jf?.manifest?.mainAttributes?.getValue("Main-Class")
         return mainClassName
     }
 
-    public String[] toEnvStrings(def env) {
+    public static String[] toEnvStrings(def env) {
         return env.collect { k, v -> "$k=$v" }
     }
 

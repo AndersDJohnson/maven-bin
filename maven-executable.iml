@@ -10,6 +10,7 @@
       <sourceFolder url="file://$MODULE_DIR$/src/main/groovy" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/test/groovy" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/test/resources" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/main/resources" type="java-resource" />
       <excludeFolder url="file://$MODULE_DIR$/target/generated-sources" />
       <excludeFolder url="file://$MODULE_DIR$/target/local-repo" />
       <excludeFolder url="file://$MODULE_DIR$/target/maven-archiver" />
