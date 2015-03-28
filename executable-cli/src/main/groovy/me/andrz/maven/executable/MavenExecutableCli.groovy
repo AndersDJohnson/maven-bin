@@ -24,19 +24,10 @@ public class MavenExecutableCli {
         log.debug "artifact: $artifact"
         log.debug "arguments: $arguments"
 
-        run(artifact, arguments)
-	}
-
-    public static void run(String artifact, String arguments = null) {
-
-        MavenExecutable mavenExecutable = new MavenExecutable()
-
         def out = new StringBuilder()
         def err = new StringBuilder()
-        Process proc
-        proc = mavenExecutable.run(artifact, new MavenExecutableParams(
-                arguments: arguments
-        ))
+
+        Process proc = run(artifact, arguments)
 
         proc.waitForProcessOutput(out, err)
 
@@ -48,6 +39,17 @@ public class MavenExecutableCli {
         if (exitValue > 0) {
             System.exit(exitValue)
         }
+	}
+
+    public static Process run(String artifact, String arguments = null) {
+
+        MavenExecutable mavenExecutable = new MavenExecutable()
+
+        Process proc = mavenExecutable.run(artifact, new MavenExecutableParams(
+                arguments: arguments
+        ))
+
+        return proc
     }
 
 }
