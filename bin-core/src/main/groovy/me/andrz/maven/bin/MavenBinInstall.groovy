@@ -10,7 +10,7 @@ import org.eclipse.aether.artifact.Artifact
 @Slf4j
 class MavenBinInstall {
 
-    static installPath = System.getProperty("user.home") + File.separator + ".mvnx"
+    static installPath = System.getProperty("user.home") + File.separator + ".mvbn"
 
 
     public static void install(MavenBinParams params) {

@@ -32,7 +32,7 @@ class MavenBinTest {
     @Test
     public void testMetaInstall() {
         runWithOutput('me.andrz.maven:bin', new MavenBinParams(
-                alias: 'mvnx',
+                alias: 'mvbn',
                 type: 'maven-plugin'
         ))
     }

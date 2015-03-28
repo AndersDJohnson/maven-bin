@@ -13,7 +13,7 @@ Sort of like [npm] `install --global`.
 Ideally:
 
 ```
-mvnx org.apache.ant:ant -help
+mvbn org.apache.ant:ant -help
 ```
 
 Currently:
@@ -27,7 +27,7 @@ mvn me.andrz.maven:bin-maven-plugin:exec "-Dartifact=org.apache.ant:ant" "-Dargu
 Ideally:
 
 ```
-mvnx -i org.apache.ant:ant
+mvbn -i org.apache.ant:ant
 ```
 
 Currently:
@@ -45,7 +45,7 @@ Ideally:
 mvn me.andrz.maven:bin-maven-plugin:installSelf
 ```
 
-and that would make the "mvnx" command available in your PATH by calling "install" for "bin-cli".
+and that would make the "mvbn" command available in your PATH by calling "install" for "bin-cli".
 
 If we're not in Maven Central, we may have to add a repository argument, e.g.:
 
