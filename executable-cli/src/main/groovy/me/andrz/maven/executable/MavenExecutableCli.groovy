@@ -39,8 +39,15 @@ public class MavenExecutableCli {
         ))
 
         proc.waitForProcessOutput(out, err)
-        log.info out.toString()
-        log.info err.toString()
+
+        println out
+        System.err.println err
+
+        def exitValue = proc.exitValue()
+
+        if (exitValue > 0) {
+            System.exit(exitValue)
+        }
     }
 
 }
