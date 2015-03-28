@@ -36,7 +36,7 @@ class MavenExecutableInstall {
         def cmdAlias = alias + ".cmd"
         def cmdAliasFile = new File(binDir, cmdAlias)
 
-        println cmdAliasFile
+        log.debug "cmdAliasFile: $cmdAliasFile"
 
         URL cmdTemplateURL = this.getResource('templates/cmd.txt')
         String cmdTemplateText = cmdTemplateURL.text
