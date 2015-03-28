@@ -20,13 +20,13 @@ class MavenExecutableExecMojo extends AbstractMojo {
     /**
      * The enclosing project.
      */
-    @Parameter( defaultValue = '${project}', readonly = true )
+    @Parameter( defaultValue = '${project}', readonly = true, required = false )
     protected MavenProject project;
 
-    @Parameter( property  = "artifact" )
+    @Parameter( property  = "artifact", required = false )
     private String artifact;
 
-    @Parameter( property  = "arguments" )
+    @Parameter( property  = "arguments", required = false )
     private String arguments;
 
     @Parameter( property  = "alias", required = false )
