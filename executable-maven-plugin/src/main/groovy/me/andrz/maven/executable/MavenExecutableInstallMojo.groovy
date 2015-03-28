@@ -30,17 +30,11 @@ class MavenExecutableInstallMojo extends AbstractMojo {
 
         MavenExecutable mavenExecutable = new MavenExecutable()
 
-        def out = new StringBuilder()
-        def err = new StringBuilder()
-        Process proc
-        proc = mavenExecutable.run(artifact, new MavenExecutableParams(
+        mavenExecutable.run(artifact, new MavenExecutableParams(
                 install: true,
+                run: false,
                 alias: alias
         ))
-
-        proc.waitForProcessOutput(out, err)
-        log.info out.toString()
-        log.info err.toString()
     }
 
 }

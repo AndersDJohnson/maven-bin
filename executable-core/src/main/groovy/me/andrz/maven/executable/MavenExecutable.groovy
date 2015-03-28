@@ -69,6 +69,8 @@ class MavenExecutable {
      * @param coords <groupId>:<artifactId>[:<extension>[:<classifier>]]:<version>
      */
     public Process withArtifacts(MavenExecutableParams params) {
+        def proc = null
+
         init()
 
         String command = buildCommandString(params)
@@ -83,12 +85,14 @@ class MavenExecutable {
             log.debug "NOT installing"
         }
 
-        log.debug "command: ${command}"
+        if (params.run) {
+            log.debug "command: ${command}"
 
-        def env = System.getenv()
-        def envStr = toEnvStrings(env)
+            def env = System.getenv()
+            def envStr = toEnvStrings(env)
 
-        def proc = command.execute(envStr, cwd)
+            proc = command.execute(envStr, cwd)
+        }
 
         return proc
     }
