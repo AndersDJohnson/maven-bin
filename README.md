@@ -33,7 +33,7 @@ mvbn -i org.apache.ant:ant
 Currently:
 
 ```
-mvn me.andrz.maven:bin-maven-plugin:install -Dartifact=org.apache.ant:ant"
+mvn me.andrz.maven:bin-maven-plugin:install "-Dartifact=org.apache.ant:ant"
 ```
 
 
@@ -45,9 +45,13 @@ Ideally:
 mvn me.andrz.maven:bin-maven-plugin:installSelf
 ```
 
-and that would make the "mvbn" command available in your PATH by calling "install" for "bin-cli".
+and that would make the "mvbn" command available in your PATH by calling "install" for "bin-cli":
 
-If we're not in Maven Central, we may have to add a repository argument, e.g.:
+```
+mvn me.andrz.maven:bin-maven-plugin:install "-Dartifact=me.andrz.maven:bin-cli"
+```
+
+If these artifacts don't get to Maven Central, we'll have to add a repository argument, e.g.:
 
 ```
 "-DremoteRepositories=bintray-AndersDJohnson-maven::::http://dl.bintray.com/AndersDJohnson/maven"
