@@ -57,23 +57,10 @@ class MavenExecutable {
 
         Artifact targetArtifact = getArtifactFromCoords(coords)
         List<Artifact> artifacts = resolver.resolves(repositories, targetArtifact)
-        params.artifacts = artifacts
-        params.targetArtifact = targetArtifact
-        return withArtifacts(params)
-    }
 
-
-    /**
-     *
-     * @param coords <groupId>:<artifactId>[:<extension>[:<classifier>]]:<version>
-     */
-    public Process runWithProject(MavenProject project, String coords, MavenExecutableParams params = null) {
-        init()
-        if (! params) params = new MavenExecutableParams()
-        Artifact targetArtifact = getArtifactFromCoords(coords)
-        List<Artifact> artifacts = resolver.resolvesWithProject(project, targetArtifact)
         params.artifacts = artifacts
-        params.targetArtifact = targetArtifact
+        params.targetArtifact = findResolvedArtifact(targetArtifact, artifacts)
+
         return withArtifacts(params)
     }
 
@@ -123,14 +110,11 @@ class MavenExecutable {
 
         List<File> classpaths = []
 
-        def targetJarFile = null
-
-        artifacts.each { artifact ->
-            if (artifactsMatch(targetArtifact, artifact)) {
-                targetJarFile = artifact.file
-            }
+        for (Artifact artifact : artifacts) {
             classpaths.add(artifact.file)
         }
+
+        def targetJarFile = targetArtifact.file
 
         log.debug "targetJarFile: $targetJarFile"
 
@@ -181,6 +165,24 @@ class MavenExecutable {
 
     public static boolean artifactsMatch(Artifact a, Artifact b) {
         return a.artifactId == b.artifactId && a.groupId == b.groupId
+    }
+
+    public static Artifact findResolvedArtifact(Artifact artifact, List<Artifact> artifacts) {
+        Artifact resolvedArtifact = null
+
+        // find the resolved target artifact, and replace the parameter one
+        for (Artifact otherArtifact : artifacts) {
+            if (artifactsMatch(artifact, otherArtifact)) {
+                resolvedArtifact = otherArtifact
+                break
+            }
+        }
+
+        if (! resolvedArtifact) {
+            throw new Exception("Could not match artifact to resolved artifact.")
+        }
+
+        return resolvedArtifact
     }
 
     public static String getMainClassName(File jarFile) {
