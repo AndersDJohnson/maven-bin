@@ -14,6 +14,7 @@ class MavenExecutableParams {
     String arguments
     String alias
     String type = 'jar'
+    Boolean install
     String settingsPath
     String localRepoPath
 }

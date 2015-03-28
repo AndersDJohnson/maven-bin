@@ -86,10 +86,15 @@ class MavenExecutable {
 
         String command = buildCommandString(params)
 
-        // Install
-        MavenExecutableParams installParams = params.clone()
-        installParams.arguments = null
-        MavenExecutableInstall.install(installParams)
+        if (params.install) {
+            log.debug "installing"
+            MavenExecutableParams installParams = params.clone()
+            installParams.arguments = null
+            MavenExecutableInstall.install(installParams)
+        }
+        else {
+            log.debug "NOT installing"
+        }
 
         log.debug "command: ${command}"
 
