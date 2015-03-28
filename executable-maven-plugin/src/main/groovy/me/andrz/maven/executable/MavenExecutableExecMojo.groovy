@@ -39,18 +39,9 @@ class MavenExecutableExecMojo extends AbstractMojo {
         def out = new StringBuilder()
         def err = new StringBuilder()
         Process proc
-        if (project) {
-            log.info("Running with project...")
-            proc = mavenExecutable.runWithProject(project, artifact, new MavenExecutableParams(
-                    arguments: arguments
-            ))
-        }
-        else {
-            log.info("Running with local repo...")
-            proc = mavenExecutable.run(artifact, new MavenExecutableParams(
-                    arguments: arguments
-            ))
-        }
+        proc = mavenExecutable.run(artifact, new MavenExecutableParams(
+                arguments: arguments
+        ))
 
         proc.waitForProcessOutput(out, err)
         log.info out.toString()
