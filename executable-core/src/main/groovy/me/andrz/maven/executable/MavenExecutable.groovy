@@ -52,6 +52,9 @@ class MavenExecutable {
     public Process run(List<RemoteRepository> repositories, String coords, MavenExecutableParams params = null) {
         init()
         if (! params) params = new MavenExecutableParams()
+
+        log.debug "params: $params"
+
         Artifact targetArtifact = getArtifactFromCoords(coords)
         List<Artifact> artifacts = resolver.resolves(repositories, targetArtifact)
         params.artifacts = artifacts
