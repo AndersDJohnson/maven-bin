@@ -71,6 +71,7 @@
                 <artifactId>maven-plugin-plugin</artifactId>
                 <version>3.4</version>
                 <configuration>
+                    <goalPrefix>executable</goalPrefix>
                     <!-- needed to use annotation-based plugin mojos -->
                     <skipErrorNoDescriptorsFound>true</skipErrorNoDescriptorsFound>
                 </configuration>
