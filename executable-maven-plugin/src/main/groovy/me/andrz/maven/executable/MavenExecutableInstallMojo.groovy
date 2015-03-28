@@ -1,33 +1,26 @@
 package me.andrz.maven.executable
 
-import org.apache.maven.plugin.AbstractMojo;
-import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugin.AbstractMojo
+import org.apache.maven.plugin.MojoExecutionException
 import org.apache.maven.plugin.MojoFailureException
 import org.apache.maven.plugin.logging.Log
-import org.apache.maven.plugins.annotations.Mojo;
-import org.apache.maven.plugins.annotations.Parameter;
-import org.apache.maven.project.MavenProject;
+import org.apache.maven.plugins.annotations.Mojo
+import org.apache.maven.plugins.annotations.Parameter
 
 /**
  *
  */
 @Mojo(
-        name = "exec",
+        name = "install",
         requiresProject = false
 )
-class MavenExecutableExecMojo extends AbstractMojo {
+class MavenExecutableInstallMojo extends AbstractMojo {
 
-    /**
-     * The enclosing project.
-     */
-    @Parameter( defaultValue = '${project}', readonly = true, required = false )
-    protected MavenProject project;
-
-    @Parameter( property  = "artifact", required = false )
+    @Parameter( property  = "artifact" )
     private String artifact;
 
-    @Parameter( property  = "arguments", required = false )
-    private String arguments;
+    @Parameter( property  = "alias", required = false )
+    private String alias;
 
 
     public void execute()
@@ -41,7 +34,8 @@ class MavenExecutableExecMojo extends AbstractMojo {
         def err = new StringBuilder()
         Process proc
         proc = mavenExecutable.run(artifact, new MavenExecutableParams(
-                arguments: arguments
+                install: true,
+                alias: alias
         ))
 
         proc.waitForProcessOutput(out, err)
