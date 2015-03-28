@@ -9,27 +9,44 @@ CLI to install & run executable artifacts (e.g. JARs) from [Maven] repositories,
 Ideally:
 
 ```
-mvnx org.apache.ant:ant
-```
-```
-mvnx org.apache.ant:ant -h
+mvnx org.apache.ant:ant -help
 ```
 
 Currently:
 
 ```
-mvn me.andrz.maven:executable:exec "-Dartifact=org.apache.ant:ant"
+mvn me.andrz.maven:executable-maven-plugin:exec "-Dartifact=org.apache.ant:ant" "-Darguments=-help"
 ```
+
+### Installing
+
+Ideally:
+
 ```
-mvn me.andrz.maven:executable:exec "-Dartifact=org.apache.ant:ant" "-Darguments=-h"
+mvnx -i org.apache.ant:ant
 ```
+
+Currently:
+
+```
+mvn me.andrz.maven:executable-maven-plugin:install -Dartifact=org.apache.ant:ant"
+```
+
 
 ## Install
 
 Ideally:
 
 ```
-mvn dependency:get "-Dartifact=me.andrz.maven:executable:RELEASE"
+mvn me.andrz.maven:executable-maven-plugin:installSelf
+```
+
+and that would make the "mvnx" command available in your PATH by calling "install" for "executable-cli".
+
+If we're not in Maven Central, we may have to add a repository argument, e.g.:
+
+```
+"-DremoteRepositories=bintray-AndersDJohnson-maven::::http://dl.bintray.com/AndersDJohnson/maven"
 ```
 
 Currently:
