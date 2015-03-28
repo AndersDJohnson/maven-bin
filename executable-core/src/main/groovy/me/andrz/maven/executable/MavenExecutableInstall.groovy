@@ -38,9 +38,8 @@ class MavenExecutableInstall {
 
         println cmdAliasFile
 
-        String cmdTemplatePath = this.getResource('templates/cmd.txt').getFile()
-        File cmdTemplateFile = new File(cmdTemplatePath)
-        String cmdTemplateText = cmdTemplateFile.text
+        URL cmdTemplateURL = this.getResource('templates/cmd.txt')
+        String cmdTemplateText = cmdTemplateURL.text
 
         def engine = new SimpleTemplateEngine()
         def binding = [
