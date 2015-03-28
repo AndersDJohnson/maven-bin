@@ -4,7 +4,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <modelVersion>4.0.0</modelVersion>
     <groupId>me.andrz.maven</groupId>
-    <artifactId>executable-parent</artifactId>
+    <artifactId>bin-parent</artifactId>
     <version>1.0</version>
     <packaging>pom</packaging>
 
@@ -14,9 +14,9 @@
     </properties>
 
     <modules>
-        <module>executable-core</module>
-        <module>executable-cli</module>
-        <module>executable-maven-plugin</module>
+        <module>bin-core</module>
+        <module>bin-cli</module>
+        <module>bin-maven-plugin</module>
     </modules>
 
     <build>

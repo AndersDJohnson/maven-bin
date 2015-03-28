@@ -1,6 +1,10 @@
-# maven-executable
+# maven-bin
 
-CLI to install & run executable artifacts (e.g. JARs) from [Maven] repositories, with automagic classpathing of dependencies, and aliases on your global path. Sort of like [npm] `install --global`.
+CLI to install & run executable artifacts (e.g. JARs) from [Maven] repositories,
+with automagic classpathing of dependencies,
+and aliases on your global path.
+Sort of like [npm] `install --global`.
+
 
 ## Usage
 
@@ -15,7 +19,7 @@ mvnx org.apache.ant:ant -help
 Currently:
 
 ```
-mvn me.andrz.maven:executable-maven-plugin:exec "-Dartifact=org.apache.ant:ant" "-Darguments=-help"
+mvn me.andrz.maven:bin-maven-plugin:exec "-Dartifact=org.apache.ant:ant" "-Darguments=-help"
 ```
 
 ### Installing
@@ -29,7 +33,7 @@ mvnx -i org.apache.ant:ant
 Currently:
 
 ```
-mvn me.andrz.maven:executable-maven-plugin:install -Dartifact=org.apache.ant:ant"
+mvn me.andrz.maven:bin-maven-plugin:install -Dartifact=org.apache.ant:ant"
 ```
 
 
@@ -38,10 +42,10 @@ mvn me.andrz.maven:executable-maven-plugin:install -Dartifact=org.apache.ant:ant
 Ideally:
 
 ```
-mvn me.andrz.maven:executable-maven-plugin:installSelf
+mvn me.andrz.maven:bin-maven-plugin:installSelf
 ```
 
-and that would make the "mvnx" command available in your PATH by calling "install" for "executable-cli".
+and that would make the "mvnx" command available in your PATH by calling "install" for "bin-cli".
 
 If we're not in Maven Central, we may have to add a repository argument, e.g.:
 
@@ -52,8 +56,8 @@ If we're not in Maven Central, we may have to add a repository argument, e.g.:
 Currently:
 
 ```
-git clone https://github.com/AndersDJohnson/maven-executable.git
-cd maven-executable
+git clone https://github.com/AndersDJohnson/maven-bin.git
+cd maven-bin
 mvn install
 ```
 
