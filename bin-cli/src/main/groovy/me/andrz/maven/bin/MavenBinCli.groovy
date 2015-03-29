@@ -12,6 +12,8 @@ public class MavenBinCli {
 
         def cli = new CliBuilder()
 
+        cli.i(longOpt: 'install', 'Install an artifact.')
+
         def cliOptions = cli.parse(args)
         log.debug "args: $cliOptions"
 
@@ -24,10 +26,20 @@ public class MavenBinCli {
         log.debug "artifact: $artifact"
         log.debug "arguments: $arguments"
 
+        Boolean install = cliOptions.install
+        // run if not install
+        Boolean run = ! install
+
         def out = new StringBuilder()
         def err = new StringBuilder()
 
-        Process proc = run(artifact, arguments)
+        MavenBinParams params = [
+                arguments: arguments,
+                install: install,
+                run: run
+        ]
+
+        Process proc = run(artifact, params)
 
         proc.waitForProcessOutput(out, err)
 
@@ -41,13 +53,11 @@ public class MavenBinCli {
         }
 	}
 
-    public static Process run(String artifact, String arguments = null) {
+    public static Process run(String coords, MavenBinParams params) {
 
         MavenBin mavenBin = new MavenBin()
 
-        Process proc = mavenBin.run(artifact, new MavenBinParams(
-                arguments: arguments
-        ))
+        Process proc = mavenBin.run(coords, params)
 
         return proc
     }
