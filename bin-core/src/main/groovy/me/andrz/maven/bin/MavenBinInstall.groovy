@@ -10,8 +10,15 @@ import org.eclipse.aether.artifact.Artifact
 @Slf4j
 class MavenBinInstall {
 
-    static installPath = System.getProperty("user.home") + File.separator + ".mvbn"
+    static String installPath = System.getProperty("user.home") + File.separator + ".mvbn"
+    static Map<String, String> env
+    static Map<String, String> envLookup
 
+    static {
+        env = System.getenv()
+        envLookup = new TreeMap<String, String>(String.CASE_INSENSITIVE_ORDER)
+        envLookup.putAll(env)
+    }
 
     public static void install(MavenBinParams params) {
 
@@ -86,8 +93,8 @@ class MavenBinInstall {
 
 
     public static addBinToPathForWindows(String binPath) {
-        def env = System.getenv()
-        def path = env.get("PATH")
+
+        def path = envLookup.get("PATH")
 
         log.debug("path: $path")
 
