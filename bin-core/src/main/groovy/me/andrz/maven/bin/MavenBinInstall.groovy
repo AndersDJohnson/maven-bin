@@ -10,14 +10,18 @@ import org.eclipse.aether.artifact.Artifact
 @Slf4j
 class MavenBinInstall {
 
-    static String installPath = System.getProperty("user.home") + File.separator + ".mvbn"
-    static Map<String, String> env
-    static Map<String, String> envLookup
+    public static final String MVBN_PATH_ENV_VAR = "MVBN_PATH"
+    private static final String DEFAULT_INSTALL_PATH = System.getProperty("user.home") + File.separator + ".mvbn"
 
-    static {
-        env = System.getenv()
-        envLookup = new TreeMap<String, String>(String.CASE_INSENSITIVE_ORDER)
-        envLookup.putAll(env)
+    public static String getInstallPath() {
+        def env = System.getenv()
+        def MVBN_PATH = env.get(MVBN_PATH_ENV_VAR)
+        if (MVBN_PATH) {
+            return MVBN_PATH
+        }
+        else {
+            return DEFAULT_INSTALL_PATH
+        }
     }
 
     public static void install(MavenBinParams params) {
@@ -64,53 +68,17 @@ class MavenBinInstall {
 
 
     public static File initBinDir() {
+        def installPath = getInstallPath()
+        log.debug("installPath: $installPath")
         File installFile = new File(installPath);
-
-        log.debug("installFile: $installFile")
-
         installFile.mkdirs();
 
         String binPath = installPath + File.separator + "bin"
-
+        log.debug("binPath: $binPath")
         File binFile = new File(binPath)
-
         binFile.mkdirs();
 
-        addBinToPath(binPath)
-
         return binFile
-    }
-
-
-    /**
-     * Currently supports Windows 7 via Powershell.
-     * TODO: Handle other OSs including Linux, Mac, etc.
-     * @param binPath
-     */
-    public static addBinToPath(String binPath) {
-        addBinToPathForWindows(binPath)
-    }
-
-
-    public static addBinToPathForWindows(String binPath) {
-
-        def path = envLookup.get("PATH")
-
-        log.debug("path: $path")
-
-        if (! path.contains(binPath)) {
-
-            String setx = "setx PATH \"%PATH%;$binPath\""
-            Process proc = setx.execute()
-
-            // TODO: Capture output.
-            proc.waitForProcessOutput()
-
-            int exitValue = proc.exitValue()
-            if (exitValue > 0) {
-                throw new Exception("Error setting PATH. Exit code = $exitValue")
-            }
-        }
     }
 
 }
