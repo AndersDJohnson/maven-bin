@@ -4,7 +4,6 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <modelVersion>4.0.0</modelVersion>
     <name>Maven Bin Plugin</name>
-    <groupId>me.andrz.maven</groupId>
     <artifactId>bin-maven-plugin</artifactId>
     <version>1.0</version>
     <packaging>maven-plugin</packaging>
