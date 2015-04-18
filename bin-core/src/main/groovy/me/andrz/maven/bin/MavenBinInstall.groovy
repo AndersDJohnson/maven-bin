@@ -2,6 +2,8 @@ package me.andrz.maven.bin
 
 import groovy.text.SimpleTemplateEngine
 import groovy.util.logging.Slf4j
+import me.andrz.maven.bin.env.EnvPathUtils
+import org.apache.commons.lang.SystemUtils
 import org.eclipse.aether.artifact.Artifact
 
 /**
@@ -25,6 +27,33 @@ class MavenBinInstall {
     }
 
     public static void install(MavenBinParams params) {
+        File binDir = initBinDir()
+
+        if (! checkInPath(binDir)) {
+            println "Manually add to your path: \"$binDir\""
+        }
+
+        createAliasFile(binDir, params)
+    }
+
+    public static Boolean checkInPath(File file) {
+        return EnvPathUtils.getPath().contains(file.absolutePath)
+    }
+
+    public static String defaultAlias(Artifact artifact) {
+        return artifact.artifactId + '--' + artifact.groupId + '--' + artifact.version
+    }
+
+    public static String getAliasFileName(String alias) {
+        def ext = SystemUtils.IS_OS_WINDOWS ? '.cmd' : ''
+        return alias + ext
+    }
+
+    public static String getCommandTemplateForEnv() {
+        return SystemUtils.IS_OS_WINDOWS ? 'templates/cmd.txt' : 'templates/sh.txt'
+    }
+
+    public static File createAliasFile(File parent, MavenBinParams params) {
 
         Artifact targetArtifact = params.targetArtifact
 
@@ -38,18 +67,15 @@ class MavenBinInstall {
             command = MavenBin.buildCommandString(params) + ' ' // extra space for splat args
         }
 
-        File binDir = initBinDir()
+        String alias = params.alias ? params.alias : defaultAlias(targetArtifact)
 
-        def alias
-        alias = params.alias ? params.alias : defaultAlias(targetArtifact)
-
-
-        def cmdAlias = alias + ".cmd"
-        def cmdAliasFile = new File(binDir, cmdAlias)
+        def cmdAlias = getAliasFileName(alias)
+        def cmdAliasFile = new File(parent, cmdAlias)
+        cmdAliasFile.setExecutable(true)
 
         log.debug "cmdAliasFile: $cmdAliasFile"
 
-        URL cmdTemplateURL = this.getResource('templates/cmd.txt')
+        URL cmdTemplateURL = this.getResource(getCommandTemplateForEnv())
         String cmdTemplateText = cmdTemplateURL.text
 
         def engine = new SimpleTemplateEngine()
@@ -59,11 +85,8 @@ class MavenBinInstall {
         def text = engine.createTemplate(cmdTemplateText).make(binding)
 
         cmdAliasFile.text = text
-    }
 
-
-    public static defaultAlias(Artifact artifact) {
-        return artifact.artifactId + '--' + artifact.groupId + '--' + artifact.version
+        println "Installed to \"$cmdAliasFile\"."
     }
 
 
