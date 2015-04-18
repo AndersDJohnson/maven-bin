@@ -12,6 +12,7 @@
     <properties>
         <gmavenPlusVersion>1.5</gmavenPlusVersion>
         <groovyVersion>2.4.2</groovyVersion>
+        <url>https://andrz.me/maven-bin/</url>
     </properties>
 
     <modules>
@@ -20,8 +21,27 @@
         <module>bin-maven-plugin</module>
     </modules>
 
+    <distributionManagement>
+        <site>
+            <id>${project.name}</id>
+            <name>${project.name}</name>
+            <url>${url}</url>
+        </site>
+    </distributionManagement>
+
     <build>
         <pluginManagement>
         </pluginManagement>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+                <version>3.4</version>
+                <configuration>
+                    <stagingDirectory>target/staging</stagingDirectory>
+                </configuration>
+            </plugin>
+        </plugins>
     </build>
+
 </project>
