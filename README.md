@@ -10,13 +10,11 @@ Sort of like [npm] `install --global`.
 
 ### Executing Libraries
 
-Ideally:
-
 ```
 mvbn org.apache.ant:ant -help
 ```
 
-Currently:
+Verbose:
 
 ```
 mvn me.andrz.maven:bin-maven-plugin:exec "-Dartifact=org.apache.ant:ant" "-Darguments=-help"
@@ -24,13 +22,11 @@ mvn me.andrz.maven:bin-maven-plugin:exec "-Dartifact=org.apache.ant:ant" "-Dargu
 
 ### Installing Libraries
 
-Ideally:
-
 ```
 mvbn -i org.apache.ant:ant
 ```
 
-Currently:
+Verbose:
 
 ```
 mvn me.andrz.maven:bin-maven-plugin:install "-Dartifact=org.apache.ant:ant"
