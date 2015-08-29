@@ -32,6 +32,17 @@ Verbose:
 mvn me.andrz.maven:bin-maven-plugin:install "-Dartifact=org.apache.ant:ant"
 ```
 
+#### Aliases
+
+```
+mvbn -i -a ant org.apache.ant:ant
+```
+
+Verbose:
+
+```
+mvn me.andrz.maven:bin-maven-plugin:install "-Dartifact=org.apache.ant:ant" "-Dalias=ant"
+```
 
 ## Install
 
