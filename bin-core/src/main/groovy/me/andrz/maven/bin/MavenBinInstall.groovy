@@ -3,7 +3,7 @@ package me.andrz.maven.bin
 import groovy.text.SimpleTemplateEngine
 import groovy.util.logging.Slf4j
 import me.andrz.maven.bin.env.EnvPathUtils
-import org.apache.commons.lang.SystemUtils
+import org.apache.commons.lang3.SystemUtils
 import org.eclipse.aether.artifact.Artifact
 
 import java.nio.file.Files

@@ -1,7 +1,7 @@
 package me.andrz.maven.bin.env
 
 import groovy.util.logging.Slf4j
-import org.apache.commons.lang.SystemUtils
+import org.apache.commons.lang3.SystemUtils
 
 /**
  *
