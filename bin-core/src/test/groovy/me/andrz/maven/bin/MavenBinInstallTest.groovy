@@ -1,6 +1,7 @@
 package me.andrz.maven.bin
 
 import groovy.util.logging.Slf4j
+import org.eclipse.aether.resolution.ArtifactResolutionException
 import org.junit.Test
 import static org.junit.Assert.*
 
@@ -22,6 +23,18 @@ class MavenBinInstallTest {
         MavenBin mavenBin = new MavenBin()
 
         def artifact = 'org.apache.ant:ant'
+
+        mavenBin.run(artifact, new MavenBinParams(
+                install: true,
+                run: false
+        ))
+    }
+
+    @Test(expected = ArtifactResolutionException)
+    public void testNonExistent() {
+        MavenBin mavenBin = new MavenBin()
+
+        def artifact = 'my.some.imaginary:package-thing'
 
         mavenBin.run(artifact, new MavenBinParams(
                 install: true,
