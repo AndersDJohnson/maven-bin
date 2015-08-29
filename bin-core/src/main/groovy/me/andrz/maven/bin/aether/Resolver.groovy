@@ -5,8 +5,10 @@ import org.eclipse.aether.RepositorySystem
 import org.eclipse.aether.RepositorySystemSession
 import org.eclipse.aether.artifact.Artifact
 import org.eclipse.aether.collection.CollectRequest
+import org.eclipse.aether.collection.CollectResult
 import org.eclipse.aether.graph.Dependency
 import org.eclipse.aether.graph.DependencyFilter
+import org.eclipse.aether.graph.DependencyNode
 import org.eclipse.aether.repository.RemoteRepository
 import org.eclipse.aether.resolution.ArtifactRequest
 import org.eclipse.aether.resolution.ArtifactResult
@@ -43,9 +45,18 @@ class Resolver {
             repositories = booter.newRepositories(system, session)
         }
 
+        // First, check artifact exists by resolving - this has better exceptions than
+        //  the dependency resolution's NullPointerException when artifact doesn't exist.
+        ArtifactRequest artifactRequest = new ArtifactRequest(artifact, repositories, null)
+        ArtifactResult artifactResult = system.resolveArtifact(session, artifactRequest)
+
         CollectRequest collectRequest = new CollectRequest();
-        collectRequest.setRoot(new Dependency(artifact, scope));
+        Dependency rootDependency = new Dependency(artifact, scope);
+        collectRequest.setRoot(rootDependency);
         collectRequest.setRepositories(repositories);
+
+        CollectResult collectResult = system.collectDependencies(session, collectRequest)
+        DependencyNode dependencyNode = collectResult.getRoot();
 
         DependencyFilter classpathFilter = DependencyFilterUtils.classpathFilter(
                 JavaScopes.COMPILE,
@@ -54,11 +65,7 @@ class Resolver {
                 JavaScopes.RUNTIME,
         );
         DependencyRequest dependencyRequest = new DependencyRequest(collectRequest, classpathFilter);
-
-        // First, check artifact exists by resolving - this has better exceptions than
-        //  the dependency resolution's NullPointerException when artifact doesn't exist.
-        ArtifactRequest artifactRequest = new ArtifactRequest(artifact, repositories, null)
-        ArtifactResult artifactResult = system.resolveArtifact(session, artifactRequest)
+        dependencyRequest.setRoot(dependencyNode);
 
         DependencyResult dependencyResult = system.resolveDependencies(session, dependencyRequest)
 
