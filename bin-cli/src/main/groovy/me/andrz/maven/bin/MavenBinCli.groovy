@@ -41,6 +41,10 @@ public class MavenBinCli {
 
         Process proc = run(artifact, params)
 
+        if (! proc) {
+            return
+        }
+
         proc.waitForProcessOutput(out, err)
 
         println out
