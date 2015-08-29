@@ -37,7 +37,9 @@ mvn me.andrz.maven:bin-maven-plugin:install "-Dartifact=org.apache.ant:ant"
 ```
 
 
-## Installing maven-bin
+## Install
+
+To install maven-bin:
 
 Ideally:
 
