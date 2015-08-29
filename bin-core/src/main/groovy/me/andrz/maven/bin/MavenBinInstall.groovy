@@ -71,7 +71,6 @@ class MavenBinInstall {
 
         def cmdAlias = getAliasFileName(alias)
         def cmdAliasFile = new File(parent, cmdAlias)
-        cmdAliasFile.setExecutable(true)
 
         log.debug "cmdAliasFile: $cmdAliasFile"
 
@@ -87,6 +86,8 @@ class MavenBinInstall {
         def text = engine.createTemplate(escaped).make(binding)
 
         cmdAliasFile.text = text
+
+        cmdAliasFile.setExecutable(true)
 
         println "Installed to \"$cmdAliasFile\"."
     }
