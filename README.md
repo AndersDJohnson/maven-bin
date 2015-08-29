@@ -47,10 +47,11 @@ Ideally:
 mvn me.andrz.maven:bin-maven-plugin:installSelf
 ```
 
-and that would make the "mvbn" command available in your PATH by calling "install" for "bin-cli":
+and that would make the "mvbn" command available in your PATH -
+effectively running "install" for "bin-cli" with "mvbn" as an alias:
 
 ```
-mvn me.andrz.maven:bin-maven-plugin:install "-Dartifact=me.andrz.maven:bin-cli"
+mvn me.andrz.maven:bin-maven-plugin:install "-Dartifact=me.andrz.maven:bin-cli" "-Dalias=mvbn"
 ```
 
 If these artifacts don't get to Maven Central, we'll have to add a repository argument, e.g.:
