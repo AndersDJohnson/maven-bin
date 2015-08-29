@@ -2,6 +2,7 @@ package me.andrz.maven.bin
 
 import groovy.util.logging.Slf4j
 import me.andrz.maven.bin.aether.Resolver
+import org.apache.commons.lang.StringUtils
 import org.apache.maven.project.MavenProject
 import org.eclipse.aether.artifact.Artifact
 import org.eclipse.aether.artifact.DefaultArtifact
@@ -167,7 +168,7 @@ class MavenBin {
      * @return
      */
     public static String sanitizeCoords(String coords) {
-        if (coords.split(':').length < 3) {
+        if (StringUtils.countMatches(coords, ':') < 2) {
             coords += ':' + defaultVersion
         }
         return coords
