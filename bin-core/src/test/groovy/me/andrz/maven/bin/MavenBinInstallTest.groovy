@@ -29,4 +29,17 @@ class MavenBinInstallTest {
         ))
     }
 
+    @Test
+    public void testAliasNull() {
+        MavenBin mavenBin = new MavenBin()
+
+        def artifact = 'org.apache.ant:ant'
+
+        mavenBin.run(artifact, new MavenBinParams(
+                install: true,
+                run: false,
+                alias: null
+        ))
+    }
+
 }

@@ -13,6 +13,7 @@ public class MavenBinCli {
         def cli = new CliBuilder()
 
         cli.i(longOpt: 'install', 'Install an artifact.')
+        cli.a(longOpt: 'alias', 'Alias for install.', args: 1)
 
         def cliOptions = cli.parse(args)
         log.debug "args: $cliOptions"
@@ -30,13 +31,16 @@ public class MavenBinCli {
         // run if not install
         Boolean shouldRun = ! shouldInstall
 
+        String alias = cliOptions.alias ? cliOptions.alias : null
+
         def out = new StringBuilder()
         def err = new StringBuilder()
 
         MavenBinParams params = [
                 arguments: arguments,
                 install: shouldInstall,
-                run: shouldRun
+                run: shouldRun,
+                alias: alias
         ]
 
         Process proc = run(artifact, params)
