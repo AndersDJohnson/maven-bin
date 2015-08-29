@@ -132,7 +132,9 @@ class MavenBin {
 
         log.debug "main: $mainClassName"
 
-        def classpath = classpaths.join(';')
+        // Separator is ";" on Windows, and ":" on Unix
+        def pathSep = System.getProperty('path.separator')
+        def classpath = classpaths.join(pathSep)
 
         def command = "java -classpath \"${classpath}\" \"${mainClassName}\""
 
