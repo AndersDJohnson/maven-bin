@@ -46,7 +46,11 @@ mvn me.andrz.maven:bin-maven-plugin:install "-Dartifact=org.apache.ant:ant" "-Da
 
 ## Install
 
+### General
+
 To install maven-bin:
+
+#### 1. Install Core
 
 Ideally:
 
@@ -67,9 +71,28 @@ If these artifacts don't get to Maven Central, we'll have to add a repository ar
 "-DremoteRepositories=bintray-AndersDJohnson-maven::::http://dl.bintray.com/AndersDJohnson/maven"
 ```
 
-Currently:
+#### 2. Add to PATH
 
+Add `~/.mvbn/bin` to your system executable `PATH`.
+
+##### Unix
+
+In your `.profile`, `.bashrc`, `.bashprofile`, `.zshrc`, or other shell startup script, add something like:
+
+```sh
+MAVEN_BIN="${HOME}/.mvbn/bin"
+if [ -d "${MAVEN_BIN}" ]; then
+  export PATH="${MAVEN_BIN}:$PATH"
+fi
 ```
+
+##### Windows
+
+Coming soon.
+
+### Development
+
+```sh
 git clone https://github.com/AndersDJohnson/maven-bin.git
 cd maven-bin
 mvn install
