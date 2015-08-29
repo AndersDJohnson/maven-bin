@@ -10,16 +10,23 @@ public class MavenBinCli {
 
 	public static void main(String[] args) {
 
-        def cli = new CliBuilder()
+        def usage = 'mvbn [options] [artifact] [args...]'
+        def cli = new CliBuilder(usage: usage)
 
-        cli.i(longOpt: 'install', 'Install an artifact.')
-        cli.a(longOpt: 'alias', 'Alias for install.', args: 1)
+        cli.h(longOpt: 'help', 'Show help.')
+        cli.i(longOpt: 'install', 'Install artifact.')
+        cli.a(longOpt: 'alias', 'Alias for installed artifact.', args: 1)
 
         def cliOptions = cli.parse(args)
         log.debug "args: $cliOptions"
 
         def cliArgs = cliOptions.arguments()
         log.debug "args: $cliArgs"
+
+        if (cliOptions.help) {
+            cli.usage()
+            return
+        }
 
         def artifact = cliArgs[0]
         def arguments = cliArgs.drop(1).join(' ')
