@@ -70,9 +70,13 @@ class MavenBinTest {
 
     @Test
     public void testArgsJetty() {
-        runWithOutput('org.eclipse.jetty:jetty-start', new MavenBinParams(
-                arguments: '--help'
-        ))
+        runWithOutput(
+//                'org.eclipse.jetty:jetty-start',
+                'org.eclipse.jetty:jetty-start:(,9)', // Jetty 9 requires Java 8
+                new MavenBinParams(
+                        arguments: '--help'
+                )
+        )
     }
 
 
