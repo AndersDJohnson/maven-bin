@@ -6,6 +6,10 @@ import me.andrz.maven.bin.env.EnvPathUtils
 import org.apache.commons.lang.SystemUtils
 import org.eclipse.aether.artifact.Artifact
 
+import java.nio.file.Files
+import java.nio.file.Path
+import java.nio.file.attribute.PosixFilePermission
+
 /**
  *
  */
@@ -87,9 +91,34 @@ class MavenBinInstall {
 
         cmdAliasFile.text = text
 
-        cmdAliasFile.setExecutable(true)
+        applyPermissions(cmdAliasFile)
 
         println "Installed to \"$cmdAliasFile\"."
+    }
+
+    public static applyPermissions(File file) {
+
+        Path path = file.toPath()
+
+        try {
+            file.setExecutable(true)
+        }
+        catch (SecurityException e) {
+            log.warn("Exception applying file permissions.", e);
+        }
+
+        try {
+            Set<PosixFilePermission> perms = new HashSet<PosixFilePermission>();
+
+            perms.add(PosixFilePermission.OWNER_READ);
+            perms.add(PosixFilePermission.OWNER_WRITE);
+            perms.add(PosixFilePermission.OWNER_EXECUTE);
+
+            Files.setPosixFilePermissions(path, perms);
+        }
+        catch (UnsupportedOperationException e) {
+            log.warn("Exception applying file permissions.", e);
+        }
     }
 
     public static String escapeDollars(String input) {
