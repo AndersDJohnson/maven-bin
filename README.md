@@ -8,7 +8,7 @@ Sort of like [npm] `install --global`.
 
 ## Usage
 
-### Executing 
+### Executing Libraries
 
 Ideally:
 
@@ -22,7 +22,7 @@ Currently:
 mvn me.andrz.maven:bin-maven-plugin:exec "-Dartifact=org.apache.ant:ant" "-Darguments=-help"
 ```
 
-### Installing
+### Installing Libraries
 
 Ideally:
 
@@ -37,7 +37,7 @@ mvn me.andrz.maven:bin-maven-plugin:install "-Dartifact=org.apache.ant:ant"
 ```
 
 
-## Install
+## Installing maven-bin
 
 Ideally:
 
