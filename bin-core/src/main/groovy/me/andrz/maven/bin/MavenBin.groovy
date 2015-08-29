@@ -150,8 +150,11 @@ class MavenBin {
         commandList.add("${mainClassName}")
 
         if (arguments) {
-            // TODO: Split arguments for list.
-            commandList.add(arguments)
+            // TODO: Handle spaces within quoted args?
+            def argsSplit = arguments.split(' ')
+            for (def arg : argsSplit) {
+                commandList.add(arg)
+            }
         }
 
         return commandList
