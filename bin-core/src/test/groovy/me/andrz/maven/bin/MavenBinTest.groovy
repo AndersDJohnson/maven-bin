@@ -6,6 +6,9 @@ import me.andrz.maven.bin.aether.Resolver
 import org.junit.Before
 import org.junit.Ignore
 import org.junit.Test
+
+import static org.hamcrest.Matchers.containsString
+import static org.hamcrest.Matchers.not
 import static org.junit.Assert.*
 
 /**

@@ -73,7 +73,7 @@ class MavenBin {
 
         init()
 
-        String command = buildCommandString(params)
+        List<String> command = buildCommandList(params)
 
         if (params.install) {
             log.debug "installing"
@@ -97,6 +97,12 @@ class MavenBin {
         return proc
     }
 
+    public static String buildCommandString(MavenBinParams params) {
+        def commandList = buildCommandList(params)
+        // TODO: Need to consider quoting, etc.?
+        return commandList.join(' ')
+    }
+
     /**
      * Build command string for executing JAR specified by params.
      * Currently supports Windows 7 via Powershell.
@@ -105,7 +111,9 @@ class MavenBin {
      * @param params
      * @return
      */
-    public static String buildCommandString(MavenBinParams params) {
+    public static List<String> buildCommandList(MavenBinParams params) {
+
+        List<String> commandList = []
 
         List<Artifact> artifacts = params.artifacts
         Artifact targetArtifact = params.targetArtifact
@@ -136,13 +144,17 @@ class MavenBin {
         def pathSep = System.getProperty('path.separator')
         def classpath = classpaths.join(pathSep)
 
-        def command = "java -classpath \"${classpath}\" \"${mainClassName}\""
+        commandList.add('java')
+        commandList.add('-classpath')
+        commandList.add("${classpath}")
+        commandList.add("${mainClassName}")
 
         if (arguments) {
-            command += " ${arguments}"
+            // TODO: Split arguments for list.
+            commandList.add(arguments)
         }
 
-        return command
+        return commandList
     }
 
     /**
