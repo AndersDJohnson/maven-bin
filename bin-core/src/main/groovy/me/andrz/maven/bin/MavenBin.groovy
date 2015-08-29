@@ -32,7 +32,7 @@ class MavenBin {
         }
     }
 
-    public getArtifactFromCoords(String coords) {
+    public Artifact getArtifactFromCoords(String coords) {
         if (!coords) {
             throw new RuntimeException("Must provide <artifact> argument.")
         }
