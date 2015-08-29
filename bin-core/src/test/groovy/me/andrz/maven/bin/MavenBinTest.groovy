@@ -6,6 +6,7 @@ import me.andrz.maven.bin.aether.Resolver
 import org.junit.Before
 import org.junit.Ignore
 import org.junit.Test
+import static org.junit.Assert.*
 
 /**
  *
@@ -72,13 +73,20 @@ class MavenBinTest {
     }
 
 
-    private void runWithOutput(String coords, MavenBinParams params = null) {
+    private Process runWithOutput(String coords, MavenBinParams params = null) {
         def out = new StringBuilder()
         def err = new StringBuilder()
         Process proc = mavenBin.run(coords, params)
         proc.waitForProcessOutput(out, err)
         log.info out.toString()
         log.info err.toString()
+        return proc
+    }
+
+    private Process runWithOutputSuccess(String coords, MavenBinParams params = null) {
+        Process proc = runWithOutput(coords, params)
+        assertEquals(0, proc.exitValue())
+        return proc
     }
 
 }
