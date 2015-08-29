@@ -8,6 +8,7 @@ import org.eclipse.aether.collection.CollectRequest
 import org.eclipse.aether.graph.Dependency
 import org.eclipse.aether.graph.DependencyFilter
 import org.eclipse.aether.repository.RemoteRepository
+import org.eclipse.aether.resolution.ArtifactRequest
 import org.eclipse.aether.resolution.ArtifactResult
 import org.eclipse.aether.resolution.DependencyRequest
 import org.eclipse.aether.resolution.DependencyResult
@@ -54,14 +55,19 @@ class Resolver {
         );
         DependencyRequest dependencyRequest = new DependencyRequest(collectRequest, classpathFilter);
 
+        // First, check artifact exists by resolving - this has better exceptions than
+        //  the dependency resolution's NullPointerException when artifact doesn't exist.
+        ArtifactRequest artifactRequest = new ArtifactRequest(artifact, repositories, null)
+        ArtifactResult artifactResult = system.resolveArtifact(session, artifactRequest)
+
         DependencyResult dependencyResult = system.resolveDependencies(session, dependencyRequest)
 
-        List<ArtifactResult> artifactResults = dependencyResult.getArtifactResults()
+        List<ArtifactResult> dependencyArtifactResults = dependencyResult.getArtifactResults()
 
         List<Artifact> artifacts = []
 
-        for (ArtifactResult artifactResult : artifactResults) {
-            artifacts.add(artifactResult.artifact)
+        for (ArtifactResult dependencyArtifactResult : dependencyArtifactResults) {
+            artifacts.add(dependencyArtifactResult.artifact)
         }
 
         return artifacts
