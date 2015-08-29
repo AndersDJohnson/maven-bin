@@ -3,7 +3,6 @@ package me.andrz.maven.bin
 import groovy.util.logging.Slf4j
 import me.andrz.maven.bin.aether.Resolver
 import org.apache.commons.lang3.StringUtils
-import org.apache.maven.project.MavenProject
 import org.eclipse.aether.artifact.Artifact
 import org.eclipse.aether.artifact.DefaultArtifact
 import org.eclipse.aether.repository.RemoteRepository
