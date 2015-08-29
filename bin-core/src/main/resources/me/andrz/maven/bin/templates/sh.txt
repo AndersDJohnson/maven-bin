@@ -5,6 +5,6 @@ case `uname` in
     *CYGWIN*) basedir=`cygpath -w "$basedir"`;;
 esac
 
-${command}"$@"
+$${command}"$@"
 ret=$?
 exit $ret

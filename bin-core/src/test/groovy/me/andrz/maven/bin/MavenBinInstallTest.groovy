@@ -2,12 +2,20 @@ package me.andrz.maven.bin
 
 import groovy.util.logging.Slf4j
 import org.junit.Test
+import static org.junit.Assert.*
 
 /**
  *
  */
 @Slf4j
 class MavenBinInstallTest {
+
+    @Test
+    public void testEscapeDollars() {
+        assertEquals('$gr \\$sh', MavenBinInstall.escapeDollars('$$gr $sh'))
+        assertEquals('\\$gr', MavenBinInstall.escapeDollars('$gr'))
+        assertEquals('$gr', MavenBinInstall.escapeDollars('$$gr'))
+    }
 
     @Test
     public void test() {

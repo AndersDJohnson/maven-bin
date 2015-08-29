@@ -78,17 +78,25 @@ class MavenBinInstall {
         URL cmdTemplateURL = this.getResource(getCommandTemplateForEnv())
         String cmdTemplateText = cmdTemplateURL.text
 
+        def escaped = escapeDollars(cmdTemplateText)
+
         def engine = new SimpleTemplateEngine()
         def binding = [
                 command: command
         ]
-        def text = engine.createTemplate(cmdTemplateText).make(binding)
+        def text = engine.createTemplate(escaped).make(binding)
 
         cmdAliasFile.text = text
 
         println "Installed to \"$cmdAliasFile\"."
     }
 
+    public static String escapeDollars(String input) {
+        String output = new String(input)
+        output = output.replaceAll('\\$', '\\\\\\$')
+        output = output.replaceAll('\\\\\\$\\\\\\$', '\\$')
+        return output
+    }
 
     public static File initBinDir() {
         def installPath = getInstallPath()
