@@ -1,5 +1,6 @@
 package me.andrz.maven.bin.aether
 
+import groovy.util.logging.Slf4j
 import org.apache.maven.project.MavenProject
 import org.eclipse.aether.RepositorySystem
 import org.eclipse.aether.RepositorySystemSession
@@ -11,6 +12,7 @@ import org.eclipse.aether.graph.DependencyFilter
 import org.eclipse.aether.graph.DependencyNode
 import org.eclipse.aether.repository.RemoteRepository
 import org.eclipse.aether.resolution.ArtifactRequest
+import org.eclipse.aether.resolution.ArtifactResolutionException
 import org.eclipse.aether.resolution.ArtifactResult
 import org.eclipse.aether.resolution.DependencyRequest
 import org.eclipse.aether.resolution.DependencyResult
@@ -20,6 +22,7 @@ import org.eclipse.aether.util.filter.DependencyFilterUtils
 /**
  *
  */
+@Slf4j
 class Resolver {
 
     Booter booter
@@ -48,7 +51,13 @@ class Resolver {
         // First, check artifact exists by resolving - this has better exceptions than
         //  the dependency resolution's NullPointerException when artifact doesn't exist.
         ArtifactRequest artifactRequest = new ArtifactRequest(artifact, repositories, null)
-        ArtifactResult artifactResult = system.resolveArtifact(session, artifactRequest)
+        ArtifactResult artifactResult
+        try {
+            artifactResult = system.resolveArtifact(session, artifactRequest)
+        }
+        catch (ArtifactResolutionException e) {
+            throw new MavenBinArtifactResolutionException("Exception resolving artifact with request: " + artifactRequest, e)
+        }
 
         CollectRequest collectRequest = new CollectRequest();
         Dependency rootDependency = new Dependency(artifact, scope);
