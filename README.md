@@ -1,5 +1,7 @@
 # maven-bin
 
+[![Travis](https://img.shields.io/travis/AndersDJohnson/maven-bin.svg)](https://travis-ci.org/AndersDJohnson/maven-bin)
+
 CLI to install & run executable artifacts (e.g. JARs) from [Maven] repositories,
 with automagic classpathing of dependencies,
 and aliases on your global path.
