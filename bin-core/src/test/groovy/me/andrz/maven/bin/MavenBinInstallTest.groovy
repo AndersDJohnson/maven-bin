@@ -9,7 +9,7 @@ import static org.junit.Assert.*
  *
  */
 @Slf4j
-class MavenBinInstallTest {
+class MavenBinInstallTest extends MavenBinSettingsAbstractTest {
 
     @Test
     public void testEscapeDollars() {
@@ -20,6 +20,16 @@ class MavenBinInstallTest {
 
     @Test
     public void test() {
+        def artifact = 'org.apache.ant:ant'
+
+        mavenBin.run(artifact, new MavenBinParams(
+                install: true,
+                run: false
+        ))
+    }
+
+    @Test
+    public void testWithoutSettings() {
         MavenBin mavenBin = new MavenBin()
 
         def artifact = 'org.apache.ant:ant'
@@ -32,8 +42,6 @@ class MavenBinInstallTest {
 
     @Test(expected = ArtifactResolutionException)
     public void testNonExistent() {
-        MavenBin mavenBin = new MavenBin()
-
         def artifact = 'my.some.imaginary:package-thing'
 
         mavenBin.run(artifact, new MavenBinParams(
@@ -44,8 +52,6 @@ class MavenBinInstallTest {
 
     @Test
     public void testAliasNull() {
-        MavenBin mavenBin = new MavenBin()
-
         def artifact = 'org.apache.ant:ant'
 
         mavenBin.run(artifact, new MavenBinParams(

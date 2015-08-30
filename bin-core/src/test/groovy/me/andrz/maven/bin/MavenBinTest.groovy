@@ -15,22 +15,7 @@ import static org.junit.Assert.*
  *
  */
 @Slf4j
-class MavenBinTest {
-
-    MavenBin mavenBin
-
-
-    @Before
-    public void before() {
-        mavenBin = new MavenBin(
-                resolver: new Resolver(
-                        booter: new Booter(
-                                settingsPath: MavenBin.class.getResource('a/settings.xml').path
-                        )
-                )
-        )
-    }
-
+class MavenBinTest extends MavenBinSettingsAbstractTest {
 
     @Ignore("meta install won't pass first test")
     @Test
