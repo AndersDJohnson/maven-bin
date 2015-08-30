@@ -105,9 +105,17 @@ mvn install
 
 ## Dev
 
-Set default log level for slf4j simple:
+Set log level for slf4j simple:
 
+Just this package:
+
+```sh
+org.slf4j.simpleLogger.log.me.andrz.maven.bin=debug
 ```
+
+Or default (all packages):
+
+```sh
 -Dorg.slf4j.simpleLogger.defaultLogLevel=debug
 ```
 
