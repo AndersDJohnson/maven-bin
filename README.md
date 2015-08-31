@@ -108,10 +108,12 @@ mvn install
 * Uses `settings.xml` so you can configure 3rd-party repos, e.g. [Bintray].
 
 ### Wishlist
-* Aliasing (default group ID and versions)
- * Add aliased command executables to global path
-* Auto-complete
-* Search repos
+* [x] Aliasing (default group ID and versions)
+  * [x] Add aliased command executables to global path
+* [ ] Auto-complete CLI
+  * Maybe via a generic Groovy CliBuilder completion integration for Bash, zsh, PowerShell, etc.?
+* [ ] Search repos
+  * Base on Maven Central Search API? http://search.maven.org/#api
 
 
 ## Dev
