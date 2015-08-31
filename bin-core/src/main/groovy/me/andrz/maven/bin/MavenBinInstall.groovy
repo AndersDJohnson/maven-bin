@@ -3,6 +3,7 @@ package me.andrz.maven.bin
 import groovy.text.SimpleTemplateEngine
 import groovy.util.logging.Slf4j
 import me.andrz.maven.bin.env.EnvPathUtils
+import me.andrz.maven.bin.util.MavenBinFileUtils
 import org.apache.commons.lang3.SystemUtils
 import org.eclipse.aether.artifact.Artifact
 
@@ -91,34 +92,9 @@ class MavenBinInstall {
 
         cmdAliasFile.text = text
 
-        applyPermissions(cmdAliasFile)
+        MavenBinFileUtils.tryMakeExecutable(cmdAliasFile)
 
         println "Installed to \"$cmdAliasFile\"."
-    }
-
-    public static applyPermissions(File file) {
-
-        Path path = file.toPath()
-
-        try {
-            file.setExecutable(true)
-        }
-        catch (SecurityException e) {
-            log.warn("Exception applying file permissions.", e);
-        }
-
-        try {
-            Set<PosixFilePermission> perms = new HashSet<PosixFilePermission>();
-
-            perms.add(PosixFilePermission.OWNER_READ);
-            perms.add(PosixFilePermission.OWNER_WRITE);
-            perms.add(PosixFilePermission.OWNER_EXECUTE);
-
-            Files.setPosixFilePermissions(path, perms);
-        }
-        catch (UnsupportedOperationException e) {
-            log.warn("Exception applying file permissions.", e);
-        }
     }
 
     public static String escapeDollars(String input) {
