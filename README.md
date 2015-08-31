@@ -69,17 +69,11 @@ To install maven-bin:
 
 #### 1. Install Core
 
-Ideally:
-
 ```sh
-mvn me.andrz.maven:bin-maven-plugin:installSelf
+mvn me.andrz.maven:bin-maven-plugin:installSelf "-DremoteRepositories=bintray-AndersDJohnson-maven::::http://dl.bintray.com/AndersDJohnson/maven"
 ```
 
-If these artifacts don't get to Maven Central, we'll have to add a repository argument, e.g.:
-
-```sh
-"-DremoteRepositories=bintray-AndersDJohnson-maven::::http://dl.bintray.com/AndersDJohnson/maven"
-```
+That includes specifying the repository - needed until this project gets to Maven Central.
 
 #### 2. Add to PATH
 
