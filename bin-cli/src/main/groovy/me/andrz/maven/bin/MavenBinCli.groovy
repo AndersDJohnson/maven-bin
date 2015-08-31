@@ -9,6 +9,10 @@ import groovy.util.logging.Slf4j
 public class MavenBinCli {
 
 	public static void main(String[] args) {
+        process(args)
+    }
+
+    public static Process process(String[] args) {
 
         def usage = 'mvbn [options] [artifact] [args...]'
         def cli = new CliBuilder(usage: usage)
@@ -52,9 +56,7 @@ public class MavenBinCli {
 
         Process proc = run(artifact, params)
 
-        if (! proc) {
-            return
-        }
+        if (! proc) return null
 
         proc.waitForProcessOutput(out, err)
 
@@ -64,9 +66,11 @@ public class MavenBinCli {
         def exitValue = proc.exitValue()
 
         if (exitValue > 0) {
-            System.exit(exitValue)
+            throw new MavenBinExitValueNonZeroException(exitValue)
         }
-	}
+
+        return proc
+    }
 
     public static Process run(String coords, MavenBinParams params = null) {
 
