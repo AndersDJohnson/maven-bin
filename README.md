@@ -81,7 +81,7 @@ Add `~/.mvbn/bin` to your system executable `PATH`.
 
 ##### Unix
 
-In your `.profile`, `.bashrc`, `.bashprofile`, `.zshrc`, or other shell startup script, add something like:
+In your `.profile`, `.bashrc`, `.bash_profile`, `.zshrc`, or other shell startup script, add something like:
 
 ```sh
 MAVEN_BIN="${HOME}/.mvbn/bin"
