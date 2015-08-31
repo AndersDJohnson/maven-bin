@@ -13,25 +13,25 @@ Sort of like [npm] `install --global`.
 
 ### Executing Libraries
 
-```
+```sh
 mvbn org.apache.ant:ant -help
 ```
 
-Verbose:
+Or the long way:
 
-```
+```sh
 mvn me.andrz.maven:bin-maven-plugin:exec "-Dartifact=org.apache.ant:ant" "-Darguments=-help"
 ```
 
 ### Installing Libraries
 
-```
+```sh
 mvbn -i org.apache.ant:ant
 ```
 
 Or the long way:
 
-```
+```sh
 mvn me.andrz.maven:bin-maven-plugin:install "-Dartifact=org.apache.ant:ant"
 ```
 
@@ -44,13 +44,13 @@ ant--org.apache.ant--1.9.6
 
 #### Aliases
 
-```
+```sh
 mvbn -i -a ant org.apache.ant:ant
 ```
 
 Or the long way:
 
-```
+```sh
 mvn me.andrz.maven:bin-maven-plugin:install "-Dartifact=org.apache.ant:ant" "-Dalias=ant"
 ```
 
@@ -71,13 +71,13 @@ To install maven-bin:
 
 Ideally:
 
-```
+```sh
 mvn me.andrz.maven:bin-maven-plugin:installSelf
 ```
 
 If these artifacts don't get to Maven Central, we'll have to add a repository argument, e.g.:
 
-```
+```sh
 "-DremoteRepositories=bintray-AndersDJohnson-maven::::http://dl.bintray.com/AndersDJohnson/maven"
 ```
 
@@ -139,23 +139,23 @@ Or default (all packages):
 
 ## Research
 
-```
+```sh
 mvn dependency:copy "-Dartifact=org.apache.ant:ant:RELEASE" "-DoutputDirectory=./bin"
 ```
 
-```
+```sh
 mvn dependency:get "-Dartifact=org.apache.ant:ant:RELEASE"
 ```
 
-```
+```sh
 mvn -f "C:\Users\Anders\.m2\repository\com\google\guava\guava\18.0\guava-18.0.pom" org.apache.maven.plugins:maven-dependency-plugin:2.10:build-classpath
 ```
 
-```
+```sh
 mvn org.apache.maven.plugins:maven-dependency-plugin:2.10:build-classpath "-Dmdep.outputFile=foo"
 ```
 
-```
+```sh
 mvn -f .\mvn help:effective-pom
 ```
 
