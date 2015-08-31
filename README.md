@@ -29,11 +29,18 @@ mvn me.andrz.maven:bin-maven-plugin:exec "-Dartifact=org.apache.ant:ant" "-Dargu
 mvbn -i org.apache.ant:ant
 ```
 
-Verbose:
+Or the long way:
 
 ```
 mvn me.andrz.maven:bin-maven-plugin:install "-Dartifact=org.apache.ant:ant"
 ```
+
+Now, you'll have a command for it, e.g.:
+
+```sh
+ant--org.apache.ant--1.9.6
+```
+
 
 #### Aliases
 
@@ -41,11 +48,18 @@ mvn me.andrz.maven:bin-maven-plugin:install "-Dartifact=org.apache.ant:ant"
 mvbn -i -a ant org.apache.ant:ant
 ```
 
-Verbose:
+Or the long way:
 
 ```
 mvn me.andrz.maven:bin-maven-plugin:install "-Dartifact=org.apache.ant:ant" "-Dalias=ant"
 ```
+
+Now, you'll have a command for it:
+
+```sh
+ant
+```
+
 
 ## Install
 
