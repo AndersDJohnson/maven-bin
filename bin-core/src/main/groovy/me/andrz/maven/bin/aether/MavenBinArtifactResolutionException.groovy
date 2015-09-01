@@ -8,19 +8,19 @@ import org.eclipse.aether.resolution.ArtifactResult
  */
 class MavenBinArtifactResolutionException extends ArtifactResolutionException {
 
-    MavenBinArtifactResolutionException(String message, ArtifactResolutionException cause) {
+    public MavenBinArtifactResolutionException(String message, ArtifactResolutionException cause) {
         super(cause.getResults(), message, cause)
     }
 
-    MavenBinArtifactResolutionException(List<ArtifactResult> results) {
+    public MavenBinArtifactResolutionException(List<ArtifactResult> results) {
         super(results)
     }
 
-    MavenBinArtifactResolutionException(List<ArtifactResult> results, String message) {
+    public MavenBinArtifactResolutionException(List<ArtifactResult> results, String message) {
         super(results, message)
     }
 
-    MavenBinArtifactResolutionException(List<ArtifactResult> results, String message, Throwable cause) {
+    public MavenBinArtifactResolutionException(List<ArtifactResult> results, String message, Throwable cause) {
         super(results, message, cause)
     }
 }
