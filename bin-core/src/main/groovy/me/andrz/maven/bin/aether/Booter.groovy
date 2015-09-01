@@ -28,7 +28,7 @@ class Booter {
     String settingsPath
     String localRepoPath
 
-    public RepositorySystem newRepositorySystem() {
+    public static RepositorySystem newRepositorySystem() {
         return ManualRepositorySystemFactory.newRepositorySystem();
     }
 
@@ -45,14 +45,16 @@ class Booter {
         return session;
     }
 
-    public String getMavenHome() {
+    public static String getMavenHome() {
         def env = System.getenv()
         String mavenHome = env.get('M2_HOME')
         return mavenHome;
     }
 
-    public String getUserMavenHome() {
-        return System.getProperty('user.home') + File.separator + '.m2'
+    public static String getUserMavenHome() {
+        String mavenHome = getMavenHome()
+        String userMavenHome = System.getProperty('user.home') + File.separator + '.m2'
+        return mavenHome ?: userMavenHome
     }
 
     public File getLocalRepoPath() {
@@ -104,7 +106,7 @@ class Booter {
         return remoteRepositories
     }
 
-    public RemoteRepository toRemoteRepository(Repository repository, RepositorySystem system, RepositorySystemSession session) {
+    public static RemoteRepository toRemoteRepository(Repository repository, RepositorySystem system, RepositorySystemSession session) {
 
         // need a temp repo to lookup proxy
         RemoteRepository tempRemoteRepository = toRemoteRepositoryBuilder(repository).build()
@@ -120,16 +122,17 @@ class Booter {
         return remoteRepository
     }
 
-    public RemoteRepository.Builder toRemoteRepositoryBuilder(Repository repository) {
+    public static RemoteRepository.Builder toRemoteRepositoryBuilder(Repository repository) {
         RemoteRepository.Builder remoteRepositoryBuilder = new RemoteRepository.Builder(
                 repository.getId(),
                 "default",
                 repository.getUrl()
         )
+        return remoteRepositoryBuilder
 //        remoteRepositoryBuilder.setReleasePolicy(repository.getReleases() as RepositoryPolicy)
     }
 
-    public RemoteRepository newCentralRepository() {
+    public static RemoteRepository newCentralRepository() {
         return new RemoteRepository.Builder("central", "default", "http://central.maven.org/maven2/").build()
     }
 
@@ -149,7 +152,7 @@ class Booter {
         return selector
     }
 
-    public org.eclipse.aether.repository.Proxy convertProxy(Proxy settingsProxy) {
+    public static org.eclipse.aether.repository.Proxy convertProxy(Proxy settingsProxy) {
         AuthenticationBuilder auth = new AuthenticationBuilder()
         auth
             .addUsername( settingsProxy.getUsername() )
