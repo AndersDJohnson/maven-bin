@@ -13,6 +13,8 @@ Sort of like [npm] `install --global`.
 
 ### Executing Libraries
 
+Executing a library will go download it and all its dependencies, then run the main class in the JAR.
+
 ```sh
 mvbn org.apache.ant:ant -help
 ```
