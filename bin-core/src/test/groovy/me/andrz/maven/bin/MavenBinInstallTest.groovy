@@ -2,10 +2,10 @@ package me.andrz.maven.bin
 
 import groovy.util.logging.Slf4j
 import me.andrz.maven.bin.env.EnvUtils
+import me.andrz.maven.bin.util.MavenBinPathUtils
 import org.eclipse.aether.resolution.ArtifactResolutionException
 import org.junit.Test
 
-import static org.hamcrest.Matchers.*
 import static org.junit.Assert.*
 
 /**
@@ -69,6 +69,18 @@ class MavenBinInstallTest extends MavenBinSettingsAbstractTest {
         install(artifact)
 
         // TODO: Assert that we messaged to manually add to path.
+    }
+
+    @Test
+    public void testEnvMavenBinPath() {
+        String path = MavenBinPathUtils.tildeToUserHome('~/.tmp-mvbn')
+        EnvUtils.setenv(MavenBinInstall.MVBN_PATH_ENV_VAR, path)
+
+        def artifact = 'org.apache.ant:ant'
+
+        install(artifact)
+
+        // TODO: Assert that we installed to provided path.
     }
 
     private void install(String artifact, MavenBinParams params = null) {
