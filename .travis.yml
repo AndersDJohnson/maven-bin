@@ -1,4 +1,5 @@
 language: java
+sudo: false
 before_install:
   - mvn dependency:purge-local-repository -DactTransitively=false -DreResolve=false
   - rm -rf /usr/local/maven/repository
