@@ -2,9 +2,12 @@ package me.andrz.maven.bin
 
 import groovy.util.logging.Slf4j
 import me.andrz.maven.bin.aether.MavenBinArtifactResolutionException
+import org.eclipse.aether.artifact.Artifact
+import org.eclipse.aether.artifact.DefaultArtifact
 import org.junit.Ignore
 import org.junit.Test
 
+import static org.hamcrest.Matchers.equalTo
 import static org.junit.Assert.*
 
 /**
@@ -74,6 +77,14 @@ class MavenBinTest extends MavenBinSettingsAbstractTest {
                         arguments: '--help'
                 )
         )
+    }
+
+    @Test
+    public void testMakeCoords() {
+        String coords = mavenBin.sanitizeCoords('org.apache.ant:ant')
+        Artifact artifact = new DefaultArtifact(coords);
+        String madeCoords = mavenBin.makeCoords(artifact)
+        assertThat(madeCoords, equalTo(coords))
     }
 
 
