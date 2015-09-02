@@ -1,6 +1,7 @@
 package me.andrz.maven.bin
 
 import groovy.util.logging.Slf4j
+import me.andrz.maven.bin.aether.MavenBinArtifactResolutionException
 import org.junit.Ignore
 import org.junit.Test
 
@@ -29,6 +30,11 @@ class MavenBinTest extends MavenBinSettingsAbstractTest {
     @Test(expected = MavenBinArgumentException)
     public void testNoCoords() {
         runWithOutput()
+    }
+
+    @Test(expected = MavenBinArtifactResolutionException)
+    public void testNonExistent() {
+        runWithOutput('my.some.imaginary:package-thing')
     }
 
     @Test

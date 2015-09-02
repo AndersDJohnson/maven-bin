@@ -195,7 +195,7 @@ class MavenBin {
         }
 
         if (! resolvedArtifact) {
-            throw new MavenArtifactException("Could not match artifact to resolved artifact.")
+            throw new MavenBinArtifactException("Could not match artifact to resolved artifact: " + resolvedArtifact)
         }
 
         return resolvedArtifact
