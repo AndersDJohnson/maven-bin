@@ -1,14 +1,9 @@
 package me.andrz.maven.bin
 
 import groovy.util.logging.Slf4j
-import me.andrz.maven.bin.aether.Booter
-import me.andrz.maven.bin.aether.Resolver
-import org.junit.Before
 import org.junit.Ignore
 import org.junit.Test
 
-import static org.hamcrest.Matchers.containsString
-import static org.hamcrest.Matchers.not
 import static org.junit.Assert.*
 
 /**
@@ -31,7 +26,7 @@ class MavenBinTest extends MavenBinSettingsAbstractTest {
         runWithOutput('org.apache.ant:ant:RELEASE')
     }
 
-    @Test(expected = MavenArgumentException)
+    @Test(expected = MavenBinArgumentException)
     public void testNoCoords() {
         runWithOutput()
     }

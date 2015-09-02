@@ -29,7 +29,7 @@ class MavenBin {
 
     public static Artifact getArtifactFromCoords(String coords) {
         if (!coords) {
-            throw new MavenArgumentException("Must provide <artifact> argument.")
+            throw new MavenBinArgumentException("Must provide <artifact> argument.")
         }
         coords = sanitizeCoords(coords)
         return new DefaultArtifact(coords)
@@ -195,7 +195,7 @@ class MavenBin {
         }
 
         if (! resolvedArtifact) {
-            throw new Exception("Could not match artifact to resolved artifact.")
+            throw new MavenArtifactException("Could not match artifact to resolved artifact.")
         }
 
         return resolvedArtifact
