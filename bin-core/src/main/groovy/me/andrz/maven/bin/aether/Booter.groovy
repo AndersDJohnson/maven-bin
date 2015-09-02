@@ -1,7 +1,6 @@
 package me.andrz.maven.bin.aether
 
 import groovy.util.logging.Slf4j
-import me.andrz.maven.bin.env.EnvUtils
 import org.apache.maven.repository.internal.MavenRepositorySystemUtils
 import org.apache.maven.settings.Profile
 import org.apache.maven.settings.Proxy
@@ -46,11 +45,11 @@ class Booter {
         return session;
     }
 
-    public static String getMavenHome() {
-        def env = EnvUtils.getenv()
-        String mavenHome = env.get('M2_HOME')
-        return mavenHome;
-    }
+//    public static String getMavenHome() {
+//        def env = EnvUtils.getenv()
+//        String mavenHome = env.get('M2_HOME')
+//        return mavenHome;
+//    }
 
     public static String getUserMavenHome() {
         String userMavenHome = System.getProperty('user.home') + File.separator + '.m2'
@@ -82,7 +81,7 @@ class Booter {
         return settings;
     }
 
-    public List<RemoteRepository> newRepositories(RepositorySystem system, RepositorySystemSession session) {
+    public List<RemoteRepository> newRepositories(RepositorySystemSession session) {
         Settings settings = getSettings();
 
         List<RemoteRepository> remoteRepositories = new ArrayList<>()
@@ -94,7 +93,7 @@ class Booter {
                 if (profile.id && activeProfiles.contains(profile.id)) {
                     if (profile.repositories) {
                         for (Repository repository : profile.repositories) {
-                            remoteRepositories.add(toRemoteRepository(repository, system, session))
+                            remoteRepositories.add(toRemoteRepository(repository, session))
                         }
                     }
                 }
@@ -106,7 +105,7 @@ class Booter {
         return remoteRepositories
     }
 
-    public static RemoteRepository toRemoteRepository(Repository repository, RepositorySystem system, RepositorySystemSession session) {
+    public static RemoteRepository toRemoteRepository(Repository repository, RepositorySystemSession session) {
 
         // need a temp repo to lookup proxy
         RemoteRepository tempRemoteRepository = toRemoteRepositoryBuilder(repository).build()

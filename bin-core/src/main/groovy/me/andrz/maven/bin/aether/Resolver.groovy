@@ -47,7 +47,7 @@ class Resolver {
         RepositorySystemSession session = booter.newRepositorySystemSession(system);
 
         if (! repositories) {
-            repositories = booter.newRepositories(system, session)
+            repositories = booter.newRepositories(session)
         }
 
         if (! repositories) {
