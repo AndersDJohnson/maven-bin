@@ -37,6 +37,11 @@ class MavenBinTest extends MavenBinSettingsAbstractTest {
         runWithOutput('my.some.imaginary:package-thing')
     }
 
+    @Test(expected = MavenBinArtifactException)
+    public void testFindResolvedArtifactNonExistent() {
+        mavenBin.findResolvedArtifact(null, null)
+    }
+
     @Test
     public void testNoOrg() {
         runWithOutput('org.apache.ant:ant')
