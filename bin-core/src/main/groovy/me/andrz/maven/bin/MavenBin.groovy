@@ -122,12 +122,16 @@ class MavenBin {
             classpaths.add(artifact.file)
         }
 
+        if (! targetArtifact) {
+            throw new MavenBinArtifactException("No target artifact: ${targetArtifact}")
+        }
+
         def targetJarFile = targetArtifact.file
 
         log.debug "targetJarFile: $targetJarFile"
 
         if (! targetJarFile) {
-            throw new MavenBinArtifactException("Could not resolve JAR for artifact: ${targetArtifact}")
+            throw new MavenBinArtifactException("Could not resolve JAR for target artifact: ${targetArtifact}")
         }
 
         if (! mainClassName) {
