@@ -1,8 +1,5 @@
 language: java
 sudo: false
-before_install:
-  - mvn dependency:purge-local-repository -DactTransitively=false -DreResolve=false
-  - rm -rf /usr/local/maven/repository
 script: mvn test -B -Dorg.slf4j.simpleLogger.log.me.andrz.maven.bin=debug
 after_success:
   - bash <(curl -s https://codecov.io/bash)
