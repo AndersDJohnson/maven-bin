@@ -1,7 +1,6 @@
 package me.andrz.maven.bin.aether
 
 import groovy.util.logging.Slf4j
-import org.apache.maven.project.MavenProject
 import org.eclipse.aether.RepositorySystem
 import org.eclipse.aether.RepositorySystemSession
 import org.eclipse.aether.artifact.Artifact
@@ -27,15 +26,7 @@ class Resolver {
 
     Booter booter
 
-    public List<Artifact> resolvesWithProject(MavenProject project, Artifact artifact, String scope = null) {
-        return resolves(null, artifact, scope)
-    }
-
-    public List<Artifact> resolves(Artifact artifact, String scope = null) {
-        return resolves(null, artifact, scope)
-    }
-
-    public List<RemoteRepository> defaultRepositories() {
+    public static List<RemoteRepository> defaultRepositories() {
         List<RemoteRepository> repositories
         RemoteRepository central = new RemoteRepository.Builder(
                 "central",
@@ -68,6 +59,7 @@ class Resolver {
         ArtifactRequest artifactRequest = new ArtifactRequest(artifact, repositories, null)
         ArtifactResult artifactResult
         try {
+            //noinspection GroovyUnusedAssignment
             artifactResult = system.resolveArtifact(session, artifactRequest)
         }
         catch (ArtifactResolutionException e) {
