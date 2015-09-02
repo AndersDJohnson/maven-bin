@@ -33,4 +33,8 @@ class EnvUtils {
         envLookup.put(name, value)
     }
 
+    public static String[] toEnvStrings(def env) {
+        return env.collect { k, v -> "$k=$v" }
+    }
+
 }

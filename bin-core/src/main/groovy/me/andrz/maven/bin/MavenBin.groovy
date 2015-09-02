@@ -85,7 +85,7 @@ class MavenBin {
             log.debug "command: ${command}"
 
             def env = EnvUtils.getenv()
-            def envStr = toEnvStrings(env)
+            def envStr = EnvUtils.toEnvStrings(env)
 
             proc = command.execute(envStr, cwd)
         }
@@ -206,10 +206,6 @@ class MavenBin {
         JarFile jf = new JarFile(jarFile);
         String mainClassName = jf?.manifest?.mainAttributes?.getValue("Main-Class")
         return mainClassName
-    }
-
-    public static String[] toEnvStrings(def env) {
-        return env.collect { k, v -> "$k=$v" }
     }
 
 }
