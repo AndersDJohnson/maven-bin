@@ -2,6 +2,8 @@ package me.andrz.maven.bin
 
 import me.andrz.maven.bin.aether.Booter
 import me.andrz.maven.bin.aether.Resolver
+import org.eclipse.aether.artifact.Artifact
+import org.eclipse.aether.artifact.DefaultArtifact
 import org.junit.Before
 
 /**
@@ -10,6 +12,7 @@ import org.junit.Before
 abstract class MavenBinSettingsAbstractTest {
 
     MavenBin mavenBin
+    Artifact defaultArtifact
 
     @Before
     public void before() {
@@ -20,6 +23,8 @@ abstract class MavenBinSettingsAbstractTest {
                         )
                 )
         )
+
+        defaultArtifact = new DefaultArtifact(mavenBin.sanitizeCoords('org.apache.ant:ant'))
     }
 
 }
