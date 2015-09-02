@@ -127,7 +127,7 @@ class MavenBin {
         log.debug "targetJarFile: $targetJarFile"
 
         if (! targetJarFile) {
-            throw new RuntimeException("Could not resolve JAR for artifact: ${targetArtifact}")
+            throw new MavenBinArtifactException("Could not resolve JAR for artifact: ${targetArtifact}")
         }
 
         if (! mainClassName) {
