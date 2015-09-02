@@ -5,8 +5,14 @@ package me.andrz.maven.bin.env
  */
 class EnvUtils {
 
-    static Map<String, String> env
+
     static Map<String, String> envLookup
+
+    static {
+        Map<String, String> env = System.getenv()
+        envLookup = new TreeMap<String, String>(String.CASE_INSENSITIVE_ORDER)
+        envLookup.putAll(env)
+    }
 
     /**
      * Case insensitive env lookup.
@@ -14,10 +20,17 @@ class EnvUtils {
      * @return
      */
     public static Map<String,String> getenv() {
-        env = System.getenv()
-        envLookup = new TreeMap<String, String>(String.CASE_INSENSITIVE_ORDER)
-        envLookup.putAll(env)
         return envLookup
+    }
+
+    /**
+     * Case insensitive set for overrides.
+     *
+     * @param name
+     * @param value
+     */
+    public static void setenv(String name, String value) {
+        envLookup.put(name, value)
     }
 
 }
