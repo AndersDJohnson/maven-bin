@@ -7,10 +7,6 @@ import me.andrz.maven.bin.util.MavenBinFileUtils
 import org.apache.commons.lang3.SystemUtils
 import org.eclipse.aether.artifact.Artifact
 
-import java.nio.file.Files
-import java.nio.file.Path
-import java.nio.file.attribute.PosixFilePermission
-
 /**
  *
  */
