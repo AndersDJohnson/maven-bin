@@ -27,9 +27,9 @@ class MavenBin {
         }
     }
 
-    public Artifact getArtifactFromCoords(String coords) {
+    public static Artifact getArtifactFromCoords(String coords) {
         if (!coords) {
-            throw new RuntimeException("Must provide <artifact> argument.")
+            throw new MavenArgumentException("Must provide <artifact> argument.")
         }
         coords = sanitizeCoords(coords)
         return new DefaultArtifact(coords)

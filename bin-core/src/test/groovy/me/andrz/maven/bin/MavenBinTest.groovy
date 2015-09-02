@@ -31,6 +31,11 @@ class MavenBinTest extends MavenBinSettingsAbstractTest {
         runWithOutput('org.apache.ant:ant:RELEASE')
     }
 
+    @Test(expected = MavenArgumentException)
+    public void testNoCoords() {
+        runWithOutput()
+    }
+
     @Test
     public void testNoOrg() {
         runWithOutput('org.apache.ant:ant')
@@ -66,7 +71,7 @@ class MavenBinTest extends MavenBinSettingsAbstractTest {
     }
 
 
-    private Process runWithOutput(String coords, MavenBinParams params = null) {
+    private Process runWithOutput(String coords = null, MavenBinParams params = null) {
         def out = new StringBuilder()
         def err = new StringBuilder()
         Process proc = mavenBin.run(coords, params)
