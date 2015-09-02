@@ -2,6 +2,7 @@ package me.andrz.maven.bin
 
 import groovy.util.logging.Slf4j
 import me.andrz.maven.bin.aether.Resolver
+import me.andrz.maven.bin.env.EnvUtils
 import org.apache.commons.lang3.StringUtils
 import org.eclipse.aether.artifact.Artifact
 import org.eclipse.aether.artifact.DefaultArtifact
@@ -83,7 +84,7 @@ class MavenBin {
         if (params.run) {
             log.debug "command: ${command}"
 
-            def env = System.getenv()
+            def env = EnvUtils.getenv()
             def envStr = toEnvStrings(env)
 
             proc = command.execute(envStr, cwd)

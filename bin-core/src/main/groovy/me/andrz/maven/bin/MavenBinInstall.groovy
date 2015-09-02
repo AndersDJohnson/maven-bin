@@ -3,6 +3,7 @@ package me.andrz.maven.bin
 import groovy.text.SimpleTemplateEngine
 import groovy.util.logging.Slf4j
 import me.andrz.maven.bin.env.EnvPathUtils
+import me.andrz.maven.bin.env.EnvUtils
 import me.andrz.maven.bin.util.MavenBinFileUtils
 import org.apache.commons.lang3.SystemUtils
 import org.eclipse.aether.artifact.Artifact
@@ -17,8 +18,7 @@ class MavenBinInstall {
     private static final String DEFAULT_INSTALL_PATH = System.getProperty("user.home") + File.separator + ".mvbn"
 
     public static String getInstallPath() {
-        def env = System.getenv()
-        def MVBN_PATH = env.get(MVBN_PATH_ENV_VAR)
+        def MVBN_PATH = EnvUtils.getenv().get(MVBN_PATH_ENV_VAR)
         if (MVBN_PATH) {
             return MVBN_PATH
         }

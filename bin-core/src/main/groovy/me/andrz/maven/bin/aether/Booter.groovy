@@ -1,6 +1,7 @@
 package me.andrz.maven.bin.aether
 
 import groovy.util.logging.Slf4j
+import me.andrz.maven.bin.env.EnvUtils
 import org.apache.maven.repository.internal.MavenRepositorySystemUtils
 import org.apache.maven.settings.Profile
 import org.apache.maven.settings.Proxy
@@ -46,7 +47,7 @@ class Booter {
     }
 
     public static String getMavenHome() {
-        def env = System.getenv()
+        def env = EnvUtils.getenv()
         String mavenHome = env.get('M2_HOME')
         return mavenHome;
     }
