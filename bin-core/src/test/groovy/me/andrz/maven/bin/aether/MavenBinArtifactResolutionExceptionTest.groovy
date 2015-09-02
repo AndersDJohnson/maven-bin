@@ -7,6 +7,8 @@ import org.junit.Test
  *
  */
 class MavenBinArtifactResolutionExceptionTest {
+
+    @SuppressWarnings(['unused', 'GroovyResultOfObjectAllocationIgnored'])
     @Test
     public void testConstructors() {
         List<ArtifactResult> results = []
