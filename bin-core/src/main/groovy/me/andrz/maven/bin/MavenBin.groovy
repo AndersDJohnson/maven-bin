@@ -21,11 +21,6 @@ class MavenBin {
 
     public static final File cwd = new File(System.getProperty("user.dir"))
 
-    public void main(String[] args) {
-        log.debug args.toString()
-        run(args[0])
-    }
-
     public init() {
         if (! resolver) {
             resolver = new Resolver()
