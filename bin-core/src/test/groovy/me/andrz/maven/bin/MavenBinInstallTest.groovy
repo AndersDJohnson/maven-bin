@@ -22,43 +22,48 @@ class MavenBinInstallTest extends MavenBinSettingsAbstractTest {
     public void test() {
         def artifact = 'org.apache.ant:ant'
 
-        mavenBin.run(artifact, new MavenBinParams(
-                install: true,
-                run: false
-        ))
+        install(artifact)
     }
 
     @Test
     public void testWithoutSettings() {
-        MavenBin mavenBin = new MavenBin()
-
         def artifact = 'org.apache.ant:ant'
 
-        mavenBin.run(artifact, new MavenBinParams(
-                install: true,
-                run: false
-        ))
+        install(artifact)
     }
 
     @Test(expected = ArtifactResolutionException)
     public void testNonExistent() {
         def artifact = 'my.some.imaginary:package-thing'
 
-        mavenBin.run(artifact, new MavenBinParams(
-                install: true,
-                run: false
-        ))
+        install(artifact)
     }
 
     @Test
     public void testAliasNull() {
         def artifact = 'org.apache.ant:ant'
 
-        mavenBin.run(artifact, new MavenBinParams(
-                install: true,
-                run: false,
+        install(artifact, new MavenBinParams(
                 alias: null
         ))
+    }
+
+    @Test
+    public void testMavenPlugin() {
+        def artifact = 'org.apache.maven.plugins:maven-dependency-plugin'
+
+        install(artifact, new MavenBinParams(
+                type: 'maven-plugin'
+        ))
+    }
+
+    private void install(String artifact, MavenBinParams params = null) {
+        params = params ?: new MavenBinParams()
+
+        params.install = true
+        params.run = false
+
+        mavenBin.run(artifact, params)
     }
 
 }
