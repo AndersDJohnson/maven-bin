@@ -81,7 +81,7 @@ class MavenBinTest extends MavenBinSettingsAbstractTest {
 
     @Test
     public void testMakeCoords() {
-        String coords = mavenBin.sanitizeCoords('org.apache.ant:ant')
+        String coords = mavenBin.sanitizeCoords(defaultCoords)
         Artifact artifact = new DefaultArtifact(coords)
         String madeCoords = mavenBin.makeCoords(artifact)
         assertThat(madeCoords, equalTo(coords))
@@ -97,6 +97,12 @@ class MavenBinTest extends MavenBinSettingsAbstractTest {
         mavenBin.buildCommandList([
                 targetArtifact: defaultArtifact
         ] as MavenBinParams)
+    }
+
+    @Test
+    public void testWithNoSettings() {
+        mavenBin = new MavenBin()
+        runWithOutput(defaultCoords)
     }
 
 

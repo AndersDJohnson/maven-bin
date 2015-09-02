@@ -13,6 +13,7 @@ abstract class MavenBinSettingsAbstractTest {
 
     MavenBin mavenBin
     Artifact defaultArtifact
+    String defaultCoords = 'org.apache.ant:ant'
 
     @Before
     public void before() {
@@ -24,7 +25,7 @@ abstract class MavenBinSettingsAbstractTest {
                 )
         )
 
-        defaultArtifact = new DefaultArtifact(mavenBin.sanitizeCoords('org.apache.ant:ant'))
+        defaultArtifact = new DefaultArtifact(mavenBin.sanitizeCoords(defaultCoords))
     }
 
 }
