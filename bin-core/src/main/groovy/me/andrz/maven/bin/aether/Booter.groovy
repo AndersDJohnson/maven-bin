@@ -52,9 +52,8 @@ class Booter {
     }
 
     public static String getUserMavenHome() {
-        String mavenHome = getMavenHome()
         String userMavenHome = System.getProperty('user.home') + File.separator + '.m2'
-        return mavenHome ?: userMavenHome
+        return userMavenHome
     }
 
     public File getLocalRepoPath() {
