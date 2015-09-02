@@ -28,6 +28,13 @@ class Booter {
     String settingsPath
     String localRepoPath
 
+    public static List<RemoteRepository> defaultRepositories() {
+        List<RemoteRepository> repositories
+        RemoteRepository central = newCentralRepository()
+        repositories = [ central ]
+        return repositories
+    }
+
     public static RepositorySystem newRepositorySystem() {
         return ManualRepositorySystemFactory.newRepositorySystem();
     }
@@ -100,7 +107,7 @@ class Booter {
             }
         }
         else {
-            remoteRepositories.add(newCentralRepository())
+            remoteRepositories.addAll(defaultRepositories())
         }
         return remoteRepositories
     }

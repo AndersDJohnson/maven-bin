@@ -26,17 +26,6 @@ class Resolver {
 
     Booter booter
 
-    public static List<RemoteRepository> defaultRepositories() {
-        List<RemoteRepository> repositories
-        RemoteRepository central = new RemoteRepository.Builder(
-                "central",
-                "default",
-                "http://repo1.maven.org/maven2/"
-        ).build()
-        repositories = [ central ]
-        return repositories
-    }
-
     public List<Artifact> resolves(List<RemoteRepository> repositories, Artifact artifact, String scope = '') {
 
         if (! booter) {
@@ -48,10 +37,6 @@ class Resolver {
 
         if (! repositories) {
             repositories = booter.newRepositories(session)
-        }
-
-        if (! repositories) {
-            repositories = defaultRepositories()
         }
 
         // First, check artifact exists by resolving - this has better exceptions than
