@@ -6,7 +6,10 @@ package me.andrz.maven.bin.util
 class MavenBinPathUtils {
 
     public static String tildeToUserHome(String path) {
-        return path.replaceFirst('^~', System.getProperty("user.home"))
+        String userHome = System.getProperty("user.home")
+        userHome = userHome.replace('\\','/')
+        path = path.replaceFirst('^~', userHome)
+        return path
     }
 
 }
