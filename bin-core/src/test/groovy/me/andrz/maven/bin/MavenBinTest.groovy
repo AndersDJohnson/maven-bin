@@ -111,20 +111,17 @@ class MavenBinTest extends MavenBinSettingsAbstractTest {
     }
 
 
-    private Process runWithOutput(String coords = null, MavenBinParams params = null) {
-        def out = new StringBuilder()
-        def err = new StringBuilder()
-        Process proc = mavenBin.run(coords, params)
-        proc.waitForProcessOutput(out, err)
-        log.info out.toString()
-        log.info err.toString()
-        return proc
+    private StdIo runWithOutput(String coords = null, MavenBinParams params = null) {
+        StdIo stdIo = mavenBin.run(coords, params)
+        log.info stdIo.out.toString()
+        log.info stdIo.err.toString()
+        return stdIo
     }
 
-    private Process runWithOutputSuccess(String coords, MavenBinParams params = null) {
-        Process proc = runWithOutput(coords, params)
-        assertEquals(0, proc.exitValue())
-        return proc
+    private StdIo runWithOutputSuccess(String coords, MavenBinParams params = null) {
+        StdIo stdIo = runWithOutput(coords, params)
+        assertEquals(0, stdIo.exitValue)
+        return stdIo
     }
 
 }

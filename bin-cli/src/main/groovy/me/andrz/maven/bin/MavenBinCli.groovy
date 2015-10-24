@@ -12,7 +12,7 @@ public class MavenBinCli {
         process(args)
     }
 
-    public static Process process(String[] args) {
+    public static StdIo process(String[] args) {
 
         def usage = 'mvbn [options] [artifact] [args...]'
         def cli = new CliBuilder(usage: usage)
@@ -44,9 +44,6 @@ public class MavenBinCli {
 
         String alias = cliOptions.alias ? cliOptions.alias : null
 
-        def out = new StringBuilder()
-        def err = new StringBuilder()
-
         MavenBinParams params = [
                 arguments: arguments,
                 install: shouldInstall,
@@ -54,31 +51,27 @@ public class MavenBinCli {
                 alias: alias
         ]
 
-        Process proc = run(artifact, params)
+        StdIo stdIo = run(artifact, params)
 
-        if (! proc) return null
+        println stdIo.out.toString()
+        System.err.println stdIo.err.toString()
 
-        proc.waitForProcessOutput(out, err)
-
-        println out
-        System.err.println err
-
-        def exitValue = proc.exitValue()
+        def exitValue = stdIo.exitValue
 
         if (exitValue > 0) {
             throw new MavenBinExitValueNonZeroException(exitValue)
         }
 
-        return proc
+        return stdIo
     }
 
-    public static Process run(String coords, MavenBinParams params = null) {
+    public static StdIo run(String coords, MavenBinParams params = null) {
 
         MavenBin mavenBin = new MavenBin()
 
-        Process proc = mavenBin.run(coords, params)
+        StdIo stdIo = mavenBin.run(coords, params)
 
-        return proc
+        return stdIo
     }
 
 }

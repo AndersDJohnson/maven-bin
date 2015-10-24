@@ -43,7 +43,7 @@ class MavenBin {
         return coords.split('@')
     }
 
-    public Process run(String coords, MavenBinParams params = null) {
+    public StdIo run(String coords, MavenBinParams params = null) {
         if (! params) params = new MavenBinParams()
         return run(null, coords, params)
     }
@@ -52,7 +52,7 @@ class MavenBin {
      *
      * @param coords <groupId>:<artifactId>[:<extension>[:<classifier>]]:<version>
      */
-    public Process run(List<RemoteRepository> repositories, String coords, MavenBinParams params = null) {
+    public StdIo run(List<RemoteRepository> repositories, String coords, MavenBinParams params = null) {
         init()
         if (! params) params = new MavenBinParams()
 
@@ -78,8 +78,8 @@ class MavenBin {
      *
      * @param coords <groupId>:<artifactId>[:<extension>[:<classifier>]]:<version>
      */
-    public Process withArtifacts(MavenBinParams params) {
-        def proc = null
+    public StdIo withArtifacts(MavenBinParams params) {
+        def stdIo = new StdIo()
 
         init()
 
@@ -101,10 +101,12 @@ class MavenBin {
             def env = EnvUtils.getenv()
             def envStr = EnvUtils.toEnvStrings(env)
 
-            proc = command.execute(envStr, cwd)
+            def proc = command.execute(envStr, cwd)
+            proc.waitForProcessOutput(stdIo.out, stdIo.err)
+            stdIo.exitValue = proc.exitValue()
         }
 
-        return proc
+        return stdIo
     }
 
     public static String buildCommandString(MavenBinParams params) {

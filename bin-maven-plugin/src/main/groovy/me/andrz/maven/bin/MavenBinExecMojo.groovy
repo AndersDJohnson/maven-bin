@@ -37,16 +37,12 @@ class MavenBinExecMojo extends AbstractMojo {
 
         MavenBin mavenBin = new MavenBin()
 
-        def out = new StringBuilder()
-        def err = new StringBuilder()
-        Process proc
-        proc = mavenBin.run(artifact, new MavenBinParams(
+        StdIo stdIo = mavenBin.run(artifact, new MavenBinParams(
                 arguments: arguments
         ))
 
-        proc.waitForProcessOutput(out, err)
-        log.info out.toString()
-        log.info err.toString()
+        log.info stdIo.out.toString()
+        log.info stdIo.err.toString()
     }
 
 }
