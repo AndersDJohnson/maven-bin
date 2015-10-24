@@ -3,17 +3,17 @@
 [![Travis](https://img.shields.io/travis/AndersDJohnson/maven-bin.svg)](https://travis-ci.org/AndersDJohnson/maven-bin)
 [![Codecov](https://img.shields.io/codecov/c/github/AndersDJohnson/maven-bin.svg)](http://codecov.io/github/AndersDJohnson/maven-bin)
 
-CLI to install & run executable artifacts (e.g. JARs) from [Maven] repositories,
+CLI to [install][] & [execute][] libraries from [Maven] repositories,
 with automagic classpathing of dependencies,
-and aliases on your global path.
+and [aliases][] on your global path.
 Sort of like [npm] `install --global`.
 
 
 ## Use
 
-### Executing Libraries
+### Executing
 
-Executing a library will go download it and all its dependencies, then run the main class in the JAR.
+Executing a library will be sure it and all its dependencies are downloaded, then run a class in the JAR, defaulting to its main class.
 
 ```sh
 mvbn org.apache.ant:ant -help
@@ -25,7 +25,18 @@ Or the long way:
 mvn me.andrz.maven:bin-maven-plugin:exec "-Dartifact=org.apache.ant:ant" "-Darguments=-help"
 ```
 
-### Installing Libraries
+#### Non-Main Classes
+
+Non-main classes can be specified with an `@...` suffix on the artifact coordinates, e.g.:
+
+```sh
+mvbn org.antlr:antlr4@org.antlr.v4.gui.TestRig
+```
+
+### Installing
+
+Installing a library will first download as above, then create an executable script file
+as a shortcut to execute it.
 
 ```sh
 mvbn -i org.apache.ant:ant
@@ -42,6 +53,8 @@ Now, you'll have a command for it, e.g.:
 ```sh
 ant--org.apache.ant--1.9.6
 ```
+
+But you'll probably want to specify [aliases][].
 
 #### Aliases
 
@@ -211,3 +224,6 @@ mvn -f .\mvn help:effective-pom
 [bintray]: https://bintray.com/
 [maven]: https://maven.apache.org/
 [npm]: https://www.npmjs.com/
+[install]: #installing
+[execute]: #executing
+[aliases]: #aliases
