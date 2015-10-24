@@ -9,7 +9,7 @@ and aliases on your global path.
 Sort of like [npm] `install --global`.
 
 
-## Usage
+## Use
 
 ### Executing Libraries
 
