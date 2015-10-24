@@ -161,7 +161,7 @@ class MavenBin {
 
         commandList.add('java')
         commandList.add('-classpath')
-        commandList.add("${classpath}")
+        commandList.add("\"${classpath}\"")
         commandList.add("${mainClassName}")
 
         if (arguments) {
