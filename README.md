@@ -61,6 +61,20 @@ Now, you'll have a command for it:
 ant
 ```
 
+### Classpaths
+
+Get the classpath for an artifact:
+
+```sh
+mvbn -c org.antlr:antlr4
+```
+
+For example, to use when compiling:
+
+```sh
+javac -cp "$(mvbn -c org.antlr:antlr4)" MyGrammar*.java
+```
+
 
 ## Install
 
