@@ -51,6 +51,11 @@ class MavenBinTest extends MavenBinSettingsAbstractTest {
     }
 
     @Test
+    public void testMainClassName() {
+        runWithOutput('org.antlr:antlr4:4.0@org.antlr.v4.runtime.misc.TestRig')
+    }
+
+    @Test
     public void testBintray() {
         runWithOutput('com.github.jengelman.gradle.plugins:shadow')
     }

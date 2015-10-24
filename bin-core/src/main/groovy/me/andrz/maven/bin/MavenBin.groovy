@@ -36,6 +36,13 @@ class MavenBin {
         return new DefaultArtifact(coords)
     }
 
+    public static String[] splitMainClassNameFromCoords(String coords) {
+        if (!coords) {
+            throw new MavenBinArgumentException("Must provide <artifact> argument.")
+        }
+        return coords.split('@')
+    }
+
     public Process run(String coords, MavenBinParams params = null) {
         if (! params) params = new MavenBinParams()
         return run(null, coords, params)
@@ -51,11 +58,18 @@ class MavenBin {
 
         log.debug "params: $params"
 
+        String mainClassName = null
+        String[] split = splitMainClassNameFromCoords(coords)
+        if (split.length == 2) {
+            coords = split[0]
+            mainClassName = split[1]
+        }
         Artifact targetArtifact = getArtifactFromCoords(coords)
         List<Artifact> artifacts = resolver.resolves(repositories, targetArtifact)
 
         params.artifacts = artifacts
         params.targetArtifact = findResolvedArtifact(targetArtifact, artifacts)
+        params.mainClassName = mainClassName
 
         return withArtifacts(params)
     }
