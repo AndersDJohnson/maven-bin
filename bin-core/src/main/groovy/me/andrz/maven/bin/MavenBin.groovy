@@ -161,7 +161,7 @@ class MavenBin {
 
         commandList.add('java')
         commandList.add('-classpath')
-        commandList.add("\"${classpath}\"")
+        commandList.add("${classpath}")
         commandList.add("${mainClassName}")
 
         if (arguments) {
@@ -185,7 +185,7 @@ class MavenBin {
 
     public static List<String> getClasspaths(List<Artifact> artifacts) {
         List<File> classpathFiles = getClasspathFiles(artifacts)
-        List<String> classpaths = classpathFiles.collect { it.absolutePath }
+        List<String> classpaths = classpathFiles.collect { it.absolutePath.replaceAll(' ', '\\ ') }
         classpaths.add(SystemUtils.IS_OS_WINDOWS ? '%CLASSPATH%' : '${CLASSPATH}')
         return classpaths
     }
