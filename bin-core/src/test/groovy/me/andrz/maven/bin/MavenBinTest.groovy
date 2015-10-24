@@ -46,7 +46,7 @@ class MavenBinTest extends MavenBinSettingsAbstractTest {
     }
 
     @Test
-    public void testNoOrg() {
+    public void testNoVersion() {
         runWithOutput('org.apache.ant:ant')
     }
 
