@@ -4,6 +4,7 @@ import groovy.util.logging.Slf4j
 import me.andrz.maven.bin.aether.MavenBinArtifactResolutionException
 import org.eclipse.aether.artifact.Artifact
 import org.eclipse.aether.artifact.DefaultArtifact
+import org.hamcrest.Matchers
 import org.junit.Ignore
 import org.junit.Test
 
@@ -70,6 +71,14 @@ class MavenBinTest extends MavenBinSettingsAbstractTest {
         runWithOutput('org.apache.ant:ant', new MavenBinParams(
                 arguments: '-h'
         ))
+    }
+
+    @Test
+    public void testGetClasspath() {
+        StdIo stdIo = runWithOutput('org.apache.ant:ant', new MavenBinParams(
+                getClasspath: true
+        ))
+        assertThat(stdIo.out.toString(), Matchers.containsString(".jar"))
     }
 
     @Test

@@ -18,6 +18,7 @@ class MavenBinParams {
     String type = 'jar'
     Boolean run = true
     Boolean install = false
+    Boolean getClasspath = false
     String settingsPath
     String localRepoPath
 }

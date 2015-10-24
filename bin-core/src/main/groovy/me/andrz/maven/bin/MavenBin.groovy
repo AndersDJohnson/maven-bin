@@ -85,6 +85,12 @@ class MavenBin {
 
         List<String> command = buildCommandList(params)
 
+        if (params.getClasspath) {
+            String classpath = getClasspath(params.artifacts)
+            stdIo.out.append(classpath)
+            return stdIo
+        }
+
         if (params.install) {
             log.debug "installing"
             MavenBinParams installParams = params.clone()
@@ -132,11 +138,7 @@ class MavenBin {
         String mainClassName = params.mainClassName
         String arguments = params.arguments
 
-        List<File> classpaths = []
-
-        for (Artifact artifact : artifacts) {
-            classpaths.add(artifact.file)
-        }
+        String classpath = getClasspath(artifacts)
 
         if (! targetArtifact) {
             throw new MavenBinArtifactException("No target artifact: ${targetArtifact}")
@@ -156,10 +158,6 @@ class MavenBin {
 
         log.debug "main: $mainClassName"
 
-        // Separator is ";" on Windows, and ":" on Unix
-        def pathSep = System.getProperty('path.separator')
-        def classpath = classpaths.join(pathSep)
-
         commandList.add('java')
         commandList.add('-classpath')
         commandList.add("${classpath}")
@@ -174,6 +172,27 @@ class MavenBin {
         }
 
         return commandList
+    }
+
+    public static String getClasspath(List<Artifact> artifacts) {
+        List<String> classpaths = getClasspaths(artifacts)
+        // Separator is ";" on Windows, and ":" on Unix
+        def pathSep = System.getProperty('path.separator')
+        def classpath = classpaths.join(pathSep)
+        return classpath
+    }
+
+    public static List<String> getClasspaths(List<Artifact> artifacts) {
+        List<File> classpaths = getClasspathFiles(artifacts)
+        return classpaths.collect { it.absolutePath }
+    }
+
+    public static List<File> getClasspathFiles(List<Artifact> artifacts) {
+        List<File> classpaths = []
+        for (Artifact artifact : artifacts) {
+            classpaths.add(artifact.file)
+        }
+        return classpaths
     }
 
     /**

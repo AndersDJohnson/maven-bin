@@ -20,6 +20,7 @@ public class MavenBinCli {
         cli.h(longOpt: 'help', 'Show help.')
         cli.i(longOpt: 'install', 'Install artifact.')
         cli.a(longOpt: 'alias', 'Alias for installed artifact.', args: 1)
+        cli.c(longOpt: 'getclasspath', 'Get classpath for artifact.')
 
         def cliOptions = cli.parse(args)
         log.debug "args: $cliOptions"
@@ -38,7 +39,8 @@ public class MavenBinCli {
         log.debug "artifact: $artifact"
         log.debug "arguments: $arguments"
 
-        Boolean shouldInstall = cliOptions.install
+        Boolean getClasspath = cliOptions.getclasspath
+        Boolean shouldInstall = !getClasspath && cliOptions.install
         // run if not install
         Boolean shouldRun = ! shouldInstall
 
@@ -47,6 +49,7 @@ public class MavenBinCli {
         MavenBinParams params = [
                 arguments: arguments,
                 install: shouldInstall,
+                getClasspath: getClasspath,
                 run: shouldRun,
                 alias: alias
         ]
