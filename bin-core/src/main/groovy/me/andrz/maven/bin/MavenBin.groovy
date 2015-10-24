@@ -4,6 +4,7 @@ import groovy.util.logging.Slf4j
 import me.andrz.maven.bin.aether.Resolver
 import me.andrz.maven.bin.env.EnvUtils
 import org.apache.commons.lang3.StringUtils
+import org.apache.commons.lang3.SystemUtils
 import org.eclipse.aether.artifact.Artifact
 import org.eclipse.aether.artifact.DefaultArtifact
 import org.eclipse.aether.repository.RemoteRepository
@@ -183,8 +184,10 @@ class MavenBin {
     }
 
     public static List<String> getClasspaths(List<Artifact> artifacts) {
-        List<File> classpaths = getClasspathFiles(artifacts)
-        return classpaths.collect { it.absolutePath }
+        List<File> classpathFiles = getClasspathFiles(artifacts)
+        List<String> classpaths = classpathFiles.collect { it.absolutePath }
+        classpaths.add(SystemUtils.IS_OS_WINDOWS ? '%CLASSPATH%' : '${CLASSPATH}')
+        return classpaths
     }
 
     public static List<File> getClasspathFiles(List<Artifact> artifacts) {
