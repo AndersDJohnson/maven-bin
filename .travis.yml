@@ -1,5 +1,5 @@
 language: java
 sudo: false
-script: mvn test -B -Dorg.slf4j.simpleLogger.log.me.andrz.maven.bin=debug
+script: mvn clean test -B -Dorg.slf4j.simpleLogger.log.me.andrz.maven.bin=debug
 after_success:
   - bash <(curl -s https://codecov.io/bash)
