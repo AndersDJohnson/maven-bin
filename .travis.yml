@@ -3,7 +3,7 @@ sudo: false
 cache:
   directories:
   - $HOME/.m2
-script: ./mvnw clean test -B -Dorg.slf4j.simpleLogger.log.me.andrz.maven.bin=debug
+script: ./mvnw clean test -B -Dorg.slf4j.simpleLogger.log.me.andrz.maven.bin=trace
 before_install:
   - export MVN_HOME=`pwd`/.m2
   - ./mvnw --version
