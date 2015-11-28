@@ -183,7 +183,7 @@ mvn org.apache.maven.plugins:maven-dependency-plugin:2.10:build-classpath "-Dmde
 mvn -f .\mvn help:effective-pom
 ```
 
-
+* https://github.com/takari/maven-wrapper
 * https://github.com/TimMoore/mojo-executor
 * https://maven.apache.org/plugin-testing/
 * https://maven.apache.org/plugin-developers/plugin-testing.html
