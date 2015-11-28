@@ -4,5 +4,8 @@ cache:
   directories:
   - $HOME/.m2
 script: mvn clean test -B -Dorg.slf4j.simpleLogger.log.me.andrz.maven.bin=debug
+before_install:
+  - export MVN_HOME=`pwd`/.m2
+  - mvn --version
 after_success:
   - bash <(curl -s https://codecov.io/bash)
