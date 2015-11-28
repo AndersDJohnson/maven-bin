@@ -7,5 +7,7 @@ script: ./mvnw clean test -B -Dorg.slf4j.simpleLogger.log.me.andrz.maven.bin=tra
 before_install:
   - export M2_HOME=`pwd`/.m2
   - ./mvnw --version
+install:
+  - ./mvnw install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
 after_success:
   - bash <(curl -s https://codecov.io/bash)
