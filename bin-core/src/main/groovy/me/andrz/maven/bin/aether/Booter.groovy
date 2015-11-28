@@ -1,6 +1,7 @@
 package me.andrz.maven.bin.aether
 
 import groovy.util.logging.Slf4j
+import me.andrz.maven.bin.env.EnvUtils
 import org.apache.maven.repository.internal.MavenRepositorySystemUtils
 import org.apache.maven.settings.Profile
 import org.apache.maven.settings.Proxy
@@ -52,11 +53,17 @@ class Booter {
         return session;
     }
 
-//    public static String getMavenHome() {
-//        def env = EnvUtils.getenv()
-//        String mavenHome = env.get('M2_HOME')
-//        return mavenHome;
-//    }
+    public static String getMavenHome() {
+        String envMavenHome = getEnvMavenHome()
+        if (envMavenHome) return envMavenHome
+        return getUserMavenHome()
+    }
+
+    public static String getEnvMavenHome() {
+        def env = EnvUtils.getenv()
+        String mavenHome = env.get('M2_HOME')
+        return mavenHome;
+    }
 
     public static String getUserMavenHome() {
         String userMavenHome = System.getProperty('user.home') + File.separator + '.m2'
@@ -65,7 +72,7 @@ class Booter {
 
     public File getLocalRepoPath() {
         if (! localRepoPath) {
-            localRepoPath = getUserMavenHome() + File.separator + 'repository'
+            localRepoPath = getMavenHome() + File.separator + 'repository'
         }
         log.debug("Local repository: \"${localRepoPath}\"")
         return new File(localRepoPath)
@@ -73,7 +80,7 @@ class Booter {
 
     public File getSettingsFile() {
         if (! settingsPath) {
-            settingsPath = getUserMavenHome() + File.separator + 'settings.xml'
+            settingsPath = getMavenHome() + File.separator + 'settings.xml'
         }
         log.debug("Settings path: \"${settingsPath}\"")
         return new File(settingsPath)
