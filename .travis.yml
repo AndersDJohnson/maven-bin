@@ -5,7 +5,7 @@ cache:
   - $HOME/.m2
 script: ./mvnw clean test -B -Dorg.slf4j.simpleLogger.log.me.andrz.maven.bin=trace
 before_install:
-  - export MVN_HOME=`pwd`/.m2
+  - export M2_HOME=`pwd`/.m2
   - ./mvnw --version
 after_success:
   - bash <(curl -s https://codecov.io/bash)
