@@ -3,10 +3,10 @@
 [![Travis](https://img.shields.io/travis/AndersDJohnson/maven-bin.svg)](https://travis-ci.org/AndersDJohnson/maven-bin)
 [![Codecov](https://img.shields.io/codecov/c/github/AndersDJohnson/maven-bin.svg)](http://codecov.io/github/AndersDJohnson/maven-bin)
 
-CLI to [install][] & [execute][] libraries from [Maven] repositories,
+A CLI to [install][] & [run][execute] executable libraries from [Maven] repositories,
 with automagic classpathing of dependencies,
 and [aliases][] on your global path.
-Sort of like [npm] `install --global`.
+Sort of like [npm]'s `install --global`.
 
 
 ## Use
