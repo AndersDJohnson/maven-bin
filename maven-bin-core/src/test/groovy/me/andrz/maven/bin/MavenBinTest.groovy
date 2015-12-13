@@ -63,7 +63,7 @@ class MavenBinTest extends MavenBinSettingsAbstractTest {
 
     @Test
     public void testCustomBintray() {
-        runWithOutput('me.andrz.jackson:jackson-json-reference')
+        runWithOutput('me.andrz.jackson:jackson-json-reference-cli:0.1.1')
     }
 
     @Test
