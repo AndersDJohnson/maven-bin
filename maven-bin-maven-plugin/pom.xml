@@ -5,13 +5,18 @@
     <modelVersion>4.0.0</modelVersion>
     <name>Maven Bin Plugin</name>
     <artifactId>maven-bin-maven-plugin</artifactId>
-    <version>1.0</version>
+    <version>0.0.0-SNAPSHOT</version>
     <packaging>maven-plugin</packaging>
 
     <properties>
         <gmavenPlusVersion>1.5</gmavenPlusVersion>
         <groovyVersion>2.4.2</groovyVersion>
-        <bin.core.version>1.0</bin.core.version>
+        <bin.core.version>0.0.0-SNAPSHOT</bin.core.version>
+        <github.user>AndersDJohnson</github.user>
+        <github.repo>maven-bin</github.repo>
+        <bintray.user>AndersDJohnson</bintray.user>
+        <bintray.repo>maven</bintray.repo>
+        <bintray.package>maven-bin-maven-plugin</bintray.package>
     </properties>
 
     <parent>
@@ -19,6 +24,20 @@
         <artifactId>maven-bin</artifactId>
         <version>1.0</version>
     </parent>
+
+    <scm>
+        <connection>scm:git:https://github.com/${github.user}/${github.repo}.git</connection>
+        <developerConnection>scm:git:git@github.com:${github.user}/${github.repo}.git</developerConnection>
+        <url>https://github.com/${github.user}/${github.repo}</url>
+        <tag>HEAD</tag>
+    </scm>
+
+    <distributionManagement>
+        <repository>
+            <id>bintray</id>
+            <url>https://api.bintray.com/maven/${bintray.user}/${bintray.repo}/${bintray.package}</url>
+        </repository>
+    </distributionManagement>
 
     <dependencies>
         <dependency>

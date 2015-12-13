@@ -6,13 +6,17 @@
     <name>Maven Bin</name>
     <groupId>me.andrz.maven</groupId>
     <artifactId>maven-bin</artifactId>
-    <version>1.0</version>
+    <version>0.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <properties>
         <gmavenPlusVersion>1.5</gmavenPlusVersion>
         <groovyVersion>2.4.2</groovyVersion>
-        <url>https://andrz.me/maven-bin/</url>
+        <github.user>AndersDJohnson</github.user>
+        <github.repo>maven-bin</github.repo>
+        <bintray.user>AndersDJohnson</bintray.user>
+        <bintray.repo>maven</bintray.repo>
+        <bintray.package>maven-bin</bintray.package>
     </properties>
 
     <modules>
@@ -21,18 +25,35 @@
         <module>maven-bin-maven-plugin</module>
     </modules>
 
+    <scm>
+        <connection>scm:git:https://github.com/${github.user}/${github.repo}.git</connection>
+        <developerConnection>scm:git:git@github.com:${github.user}/${github.repo}.git</developerConnection>
+        <url>https://github.com/${github.user}/${github.repo}</url>
+        <tag>HEAD</tag>
+    </scm>
+
     <distributionManagement>
-        <site>
-            <id>${project.name}</id>
-            <name>${project.name}</name>
-            <url>${url}</url>
-        </site>
+        <repository>
+            <id>bintray</id>
+            <url>https://api.bintray.com/maven/${bintray.user}/${bintray.repo}/${bintray.package}</url>
+        </repository>
     </distributionManagement>
 
     <build>
         <pluginManagement>
         </pluginManagement>
         <plugins>
+            <plugin>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>2.5.3</version>
+                <configuration>
+                    <useReleaseProfile>false</useReleaseProfile>
+                    <releaseProfiles>release</releaseProfiles>
+                    <autoVersionSubmodules>true</autoVersionSubmodules>
+                    <pushChanges>false</pushChanges>
+                    <localCheckout>true</localCheckout>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-site-plugin</artifactId>
