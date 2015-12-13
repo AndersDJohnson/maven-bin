@@ -22,7 +22,7 @@ class MavenBinInstallSelfMojo extends AbstractMojo {
 
         MavenBin mavenBin = new MavenBin()
 
-        mavenBin.run('me.andrz.maven:bin-cli', new MavenBinParams(
+        mavenBin.run('me.andrz.maven:maven-bin-cli', new MavenBinParams(
                 install: true,
                 run: false,
                 alias: 'mvbn'

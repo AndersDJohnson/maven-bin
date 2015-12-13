@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <name>Maven Bin</name>
     <groupId>me.andrz.maven</groupId>
-    <artifactId>bin-parent</artifactId>
+    <artifactId>maven-bin</artifactId>
     <version>1.0</version>
     <packaging>pom</packaging>
 
@@ -16,9 +16,9 @@
     </properties>
 
     <modules>
-        <module>bin-core</module>
-        <module>bin-cli</module>
-        <module>bin-maven-plugin</module>
+        <module>maven-bin-core</module>
+        <module>maven-bin-cli</module>
+        <module>maven-bin-maven-plugin</module>
     </modules>
 
     <distributionManagement>

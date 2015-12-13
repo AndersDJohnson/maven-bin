@@ -22,7 +22,7 @@ mvbn org.apache.ant:ant -help
 Or the long way:
 
 ```sh
-mvn me.andrz.maven:bin-maven-plugin:exec "-Dartifact=org.apache.ant:ant" "-Darguments=-help"
+mvn me.andrz.maven:maven-bin-maven-plugin:exec "-Dartifact=org.apache.ant:ant" "-Darguments=-help"
 ```
 
 #### Non-Main Classes
@@ -45,7 +45,7 @@ mvbn -i org.apache.ant:ant
 Or the long way:
 
 ```sh
-mvn me.andrz.maven:bin-maven-plugin:install "-Dartifact=org.apache.ant:ant"
+mvn me.andrz.maven:maven-bin-maven-plugin:install "-Dartifact=org.apache.ant:ant"
 ```
 
 Now, you'll have a command for it, e.g.:
@@ -65,7 +65,7 @@ mvbn -i -a ant org.apache.ant:ant
 Or the long way:
 
 ```sh
-mvn me.andrz.maven:bin-maven-plugin:install "-Dartifact=org.apache.ant:ant" "-Dalias=ant"
+mvn me.andrz.maven:maven-bin-maven-plugin:install "-Dartifact=org.apache.ant:ant" "-Dalias=ant"
 ```
 
 Now, you'll have a command for it:
@@ -98,7 +98,7 @@ To install maven-bin:
 #### 1. Install Core
 
 ```sh
-mvn me.andrz.maven:bin-maven-plugin:installSelf "-DremoteRepositories=bintray-AndersDJohnson-maven::::http://dl.bintray.com/AndersDJohnson/maven"
+mvn me.andrz.maven:maven-bin-maven-plugin:installSelf "-DremoteRepositories=bintray-AndersDJohnson-maven::::http://dl.bintray.com/AndersDJohnson/maven"
 ```
 
 That includes specifying the repository - needed until this project gets to Maven Central.

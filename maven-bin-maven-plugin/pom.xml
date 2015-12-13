@@ -4,7 +4,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <modelVersion>4.0.0</modelVersion>
     <name>Maven Bin Plugin</name>
-    <artifactId>bin-maven-plugin</artifactId>
+    <artifactId>maven-bin-maven-plugin</artifactId>
     <version>1.0</version>
     <packaging>maven-plugin</packaging>
 
@@ -16,14 +16,14 @@
 
     <parent>
         <groupId>me.andrz.maven</groupId>
-        <artifactId>bin-parent</artifactId>
+        <artifactId>maven-bin</artifactId>
         <version>1.0</version>
     </parent>
 
     <dependencies>
         <dependency>
             <groupId>me.andrz.maven</groupId>
-            <artifactId>bin-core</artifactId>
+            <artifactId>maven-bin-core</artifactId>
             <version>${bin.core.version}</version>
         </dependency>
         <dependency>
