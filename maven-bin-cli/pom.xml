@@ -22,7 +22,7 @@
     <parent>
         <groupId>me.andrz.maven</groupId>
         <artifactId>maven-bin</artifactId>
-        <version>1.0</version>
+        <version>0.0.0-SNAPSHOT</version>
     </parent>
 
     <scm>
