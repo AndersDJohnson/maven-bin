@@ -63,7 +63,7 @@ class MavenBinTest extends MavenBinSettingsAbstractTest {
 
     @Test
     public void testCustomBintray() {
-        runWithOutput('me.andrz.jackson:jackson-json-reference-cli:0.1.2')
+        runWithOutput('me.andrz:map-builder:1.0.0')
     }
 
     @Test
