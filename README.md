@@ -1,6 +1,7 @@
 # maven-bin
 
 [![Travis](https://img.shields.io/travis/AndersDJohnson/maven-bin.svg)](https://travis-ci.org/AndersDJohnson/maven-bin)
+[![Appveyor](https://ci.appveyor.com/api/projects/status/nppnd6tgyv4o2osc?svg=true)](https://ci.appveyor.com/project/AndersDJohnson/maven-bin)
 [![Codecov](https://img.shields.io/codecov/c/github/AndersDJohnson/maven-bin.svg)](http://codecov.io/github/AndersDJohnson/maven-bin)
 
 A CLI to [install][] & [run][execute] executable libraries from [Maven] repositories,
