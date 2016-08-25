@@ -3,7 +3,7 @@ package me.andrz.maven.bin
 import groovy.util.logging.Slf4j
 
 /**
- *
+ * MavenBinCli
  */
 @Slf4j
 public class MavenBinCli {

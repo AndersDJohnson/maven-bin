@@ -12,7 +12,7 @@ import org.eclipse.aether.repository.RemoteRepository
 import java.util.jar.JarFile;
 
 /**
- *
+ * MavenBin
  */
 @Slf4j
 class MavenBin {
