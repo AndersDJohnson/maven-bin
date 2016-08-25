@@ -5,24 +5,48 @@
     <modelVersion>4.0.0</modelVersion>
     <name>Maven Bin CLI</name>
     <artifactId>maven-bin-cli</artifactId>
-    <version>0.0.0-SNAPSHOT</version>
+    <version>1.0.0</version>
     <packaging>jar</packaging>
+    <url>https://github.com/AndersDJohnson/maven-bin</url>
+    <description>Install and run executable libraries from Maven repos.</description>
+
+    <developers>
+        <developer>
+            <id>AndersDJohnson</id>
+            <name>Anders D. Johnson</name>
+            <url>https://andrz.me</url>
+            <email>anders.d.johnson.developer@gmail.com</email>
+            <roles>
+                <role>developer</role>
+            </roles>
+            <timezone>America/Chicago</timezone>
+            <properties>
+                <picUrl>https://www.gravatar.com/avatar/5c44acedb08657aa1bdfc5524e71ff53</picUrl>
+            </properties>
+        </developer>
+    </developers>
+
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+            <comments>A business-friendly OSS license</comments>
+        </license>
+    </licenses>
 
     <properties>
         <gmavenPlusVersion>1.5</gmavenPlusVersion>
         <groovyVersion>2.4.2</groovyVersion>
-        <bin.core.version>0.0.0-SNAPSHOT</bin.core.version>
+        <bin.core.version>1.0.0</bin.core.version>
         <github.user>AndersDJohnson</github.user>
         <github.repo>maven-bin</github.repo>
-        <bintray.user>AndersDJohnson</bintray.user>
-        <bintray.repo>maven</bintray.repo>
-        <bintray.package>maven-bin-cli</bintray.package>
     </properties>
 
     <parent>
         <groupId>me.andrz.maven</groupId>
         <artifactId>maven-bin</artifactId>
-        <version>0.0.0-SNAPSHOT</version>
+        <version>1.0.0</version>
     </parent>
 
     <scm>
@@ -33,9 +57,13 @@
     </scm>
 
     <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
         <repository>
-            <id>bintray</id>
-            <url>https://api.bintray.com/maven/${bintray.user}/${bintray.repo}/${bintray.package}</url>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
         </repository>
     </distributionManagement>
 
