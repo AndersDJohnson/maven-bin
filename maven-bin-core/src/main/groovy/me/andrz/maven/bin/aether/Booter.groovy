@@ -113,7 +113,7 @@ class Booter {
                 }
             }
         }
-        else {
+        if (!remoteRepositories) {
             remoteRepositories.addAll(defaultRepositories())
         }
         return remoteRepositories
