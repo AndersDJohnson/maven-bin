@@ -107,9 +107,9 @@ mvn me.andrz.maven:maven-bin-maven-plugin:installSelf
 
 Add `~/.mvbn/bin` to your system executable `PATH`.
 
-##### Unix
+##### Unix (macOS, Linux, etc.)
 
-In your `.profile`, `.bashrc`, `.bash_profile`, `.zshrc`, or other shell startup script, add something like:
+In your shell startup script (e.g. `.profile`, `.bashrc`, `.bash_profile`, `.zshrc`), add something like:
 
 ```sh
 MAVEN_BIN="${HOME}/.mvbn/bin"
@@ -120,7 +120,11 @@ fi
 
 ##### Windows
 
-Coming soon.
+In your [PowerShell profile](http://www.howtogeek.com/50236/customizing-your-powershell-profile/), add something like:
+
+```ps
+$env:Path = $env:Path + ";${env:UserProfile}\.mvbn\bin;"
+```
 
 ### Development
 
