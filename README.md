@@ -1,5 +1,6 @@
 # maven-bin
 
+![Maven Central](https://img.shields.io/maven-central/v/me.andrz.maven/maven-bin.svg)
 [![Travis](https://img.shields.io/travis/AndersDJohnson/maven-bin.svg)](https://travis-ci.org/AndersDJohnson/maven-bin)
 [![Appveyor](https://ci.appveyor.com/api/projects/status/nppnd6tgyv4o2osc?svg=true)](https://ci.appveyor.com/project/AndersDJohnson/maven-bin)
 [![Codecov](https://img.shields.io/codecov/c/github/AndersDJohnson/maven-bin.svg)](http://codecov.io/github/AndersDJohnson/maven-bin)
@@ -99,10 +100,8 @@ To install maven-bin:
 #### 1. Install Core
 
 ```sh
-mvn me.andrz.maven:maven-bin-maven-plugin:installSelf "-DremoteRepositories=bintray-AndersDJohnson-maven::::http://dl.bintray.com/AndersDJohnson/maven"
+mvn me.andrz.maven:maven-bin-maven-plugin:installSelf
 ```
-
-That includes specifying the repository - needed until this project gets to Maven Central.
 
 #### 2. Add to PATH
 
