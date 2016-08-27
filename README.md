@@ -10,6 +10,10 @@ with automagic classpathing of dependencies,
 and [aliases][] on your global path.
 Sort of like [npm]'s `install --global`.
 
+## Features
+
+* With a single command, install JARs and execute their main classes.
+* Install from any Maven repo, off or on-prem, e.g. [Bintray], [Artifactory], [Archiva], or [Nexus], via `settings.xml`.
 
 ## Use
 
@@ -134,11 +138,6 @@ cd maven-bin
 mvn install
 ```
 
-## Features
-
-* With a single command, install JARs and execute their main classes.
-* Uses `settings.xml` so you can configure 3rd-party repos, e.g. [Bintray].
-
 ### Wishlist
 * [x] Aliasing (default group ID and versions)
   * [x] Add aliased command executables to global path
@@ -225,7 +224,10 @@ mvn -f .\mvn help:effective-pom
 * http://docs.codehaus.org/display/MAVENUSER/Mojo+Developer+Cookbook
 * http://blog.sonatype.com/2011/01/how-to-use-aether-in-maven-plugins/
 
-[bintray]: https://bintray.com/
+[bintray]: https://bintray.com/ "JFrog Bintray JCenter"
+[artifactory]: https://www.jfrog.com/artifactory/ "JFrog Artifactory"
+[archiva]: https://archiva.apache.org/ "Apache Archiva"
+[nexus]: https://www.sonatype.com/nexus-repository-oss "Sonatype Nexus Repository OSS"
 [maven]: https://maven.apache.org/
 [npm]: https://www.npmjs.com/
 [install]: #installing
