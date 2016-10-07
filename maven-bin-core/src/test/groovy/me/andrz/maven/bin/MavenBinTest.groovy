@@ -52,6 +52,11 @@ class MavenBinTest extends MavenBinSettingsAbstractTest {
     }
 
     @Test
+    public void testGroovyLib() {
+        runWithOutput('me.andrz.findbugs:findbugs-diff')
+    }
+
+    @Test
     public void testMainClassName() {
         runWithOutput('org.antlr:antlr4:4.0@org.antlr.v4.runtime.misc.TestRig')
     }
