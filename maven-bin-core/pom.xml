@@ -150,6 +150,16 @@
             <version>1.3</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <artifactId>maven-plugins</artifactId>
+            <groupId>org.apache.maven.plugins</groupId>
+            <version>28</version>
+        </dependency>
+        <dependency>
+            <artifactId>maven-dependency-plugin</artifactId>
+            <groupId>org.apache.maven.plugins</groupId>
+            <version>2.10</version>
+        </dependency>
     </dependencies>
 
     <build>

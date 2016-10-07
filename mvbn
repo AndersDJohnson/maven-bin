@@ -1,0 +1,18 @@
+#!/bin/sh
+basedir=`dirname "$0"`
+
+case `uname` in
+    *CYGWIN*) basedir=`cygpath -w "$basedir"`;;
+esac
+
+CLASSPATH="/Users/anders/.m2/repository/me/andrz/maven/maven-bin-cli/1.0.0/maven-bin-cli-1.0.0.jar:${CLASSPATH}"
+
+if [ -f pom.xml ]; then
+    mvn dependency:build-classpath -Dmdep.outputFile=.classpath
+    CLASSPATH="${CLASSPATH}:$(cat .classpath)"
+    echo "$CLASSPATH"
+fi
+
+java -classpath "${CLASSPATH}" me.andrz.maven.bin.MavenBinCli "$@"
+ret=$?
+exit $ret

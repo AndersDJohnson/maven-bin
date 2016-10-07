@@ -105,8 +105,26 @@ class MavenBin {
         if (params.run) {
             log.debug "command: ${command}"
 
+//            println "command = ${command}"
+
             def env = EnvUtils.getenv()
+
+//            def runtimeClasspath = env['CLASSPATH'] ?: ''
+//            runtimeClasspath = runtimeClasspath + getPathSeparator() + getSystemClasspath()
+
+            command = command.collect {
+                it.replace(getClasspathToken(), getSystemClasspath())
+            }
+
+//            println "runtimeClasspath = ${runtimeClasspath}"
+
+//            env['CLASSPATH'] = runtimeClasspath
+
             def envStr = EnvUtils.toEnvStrings(env)
+
+//            println "envStr = ${envStr}"
+
+            println "command = ${command}"
 
             def proc = command.execute(envStr, cwd)
             proc.waitForProcessOutput(stdIo.out, stdIo.err)
@@ -114,6 +132,10 @@ class MavenBin {
         }
 
         return stdIo
+    }
+
+    public static String getProjectClasspath () {
+
     }
 
     public static String buildCommandString(MavenBinParams params) {
@@ -178,16 +200,24 @@ class MavenBin {
     public static String getClasspath(List<Artifact> artifacts) {
         List<String> classpaths = getClasspaths(artifacts)
         // Separator is ";" on Windows, and ":" on Unix
-        def pathSep = System.getProperty('path.separator')
+        def pathSep = getPathSeparator()
         def classpath = classpaths.join(pathSep)
         return classpath
+    }
+
+    public static String getPathSeparator() {
+        return System.getProperty('path.separator')
     }
 
     public static List<String> getClasspaths(List<Artifact> artifacts) {
         List<File> classpathFiles = getClasspathFiles(artifacts)
         List<String> classpaths = classpathFiles.collect { it.absolutePath.replaceAll(' ', '\\ ') }
-        classpaths.add(SystemUtils.IS_OS_WINDOWS ? '%CLASSPATH%' : '${CLASSPATH}')
+        classpaths.add(getClasspathToken())
         return classpaths
+    }
+
+    public static getClasspathToken() {
+        return SystemUtils.IS_OS_WINDOWS ? '%CLASSPATH%' : '${CLASSPATH}'
     }
 
     public static List<File> getClasspathFiles(List<Artifact> artifacts) {
@@ -196,6 +226,22 @@ class MavenBin {
             classpaths.add(artifact.file)
         }
         return classpaths
+    }
+
+    public static String getSystemClasspath() {
+        // Get the system class loader
+        ClassLoader sysClassLoader = ClassLoader.getSystemClassLoader()
+
+        // Get the URLs
+        URL[] urls = ((URLClassLoader)sysClassLoader).getURLs()
+
+        String classpath = ''
+        for (URL url : urls) {
+            String file = url.getFile()
+            classpath += getPathSeparator() + file
+        }
+
+        return classpath
     }
 
     /**

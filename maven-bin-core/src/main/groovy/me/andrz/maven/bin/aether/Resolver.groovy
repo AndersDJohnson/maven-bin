@@ -26,6 +26,10 @@ class Resolver {
 
     Booter booter
 
+    public List<Artifact> resolves(Artifact artifact, String scope = null) {
+        return resolves(null, artifact, scope)
+    }
+
     public List<Artifact> resolves(List<RemoteRepository> repositories, Artifact artifact, String scope = '') {
 
         if (! booter) {
